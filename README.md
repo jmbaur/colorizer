@@ -1,68 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Colorizer
 
-## Available Scripts
+Minimum Viable Product:
 
-In the project directory, you can run:
+- user can draw on canvas (choosing colors, thickness, etc.)
+- web socket implementation to allow for collaboration
+- new room created on new session, where user can invite other users
+- export drawing to png/jpg file
 
-### `yarn start`
+Freezer:
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- user can implement pictures into their canvas
+- implement a database? (not really wanted at the moment)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Front-End
 
-### `yarn test`
+### Dependencies
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- socket.io?
 
-### `yarn build`
+### Routes
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- home /
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### File Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- src/
+     - App.js
+     - App.css
+     - index.js
+     - components/
+          - canvas.js
 
-### `yarn eject`
+## Back-End
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- express
+- express-session
+- socket.io
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Endpoints
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- GET / serves up index.html
 
-## Learn More
+## Testing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- test for socket connection from front-end
+- test sending/receiving data to socket
