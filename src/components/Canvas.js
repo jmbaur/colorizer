@@ -2,7 +2,7 @@ import React from "react";
 
 const sendToServer = data => console.log(data);
 
-const App = () => {
+const App = (props) => {
   const canvasRef = React.useRef(null);
   const [drawing, setDrawing] = React.useState(false);
   const [pos, setPos] = React.useState(null);
@@ -13,7 +13,7 @@ const App = () => {
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
     ctx.lineTo(prevPos.x, prevPos.y);
-    ctx.strokeStyle = "blue";
+    ctx.strokeStyle = (props.color);
     ctx.lineWidth = 2;
     ctx.stroke();
     ctx.closePath();
