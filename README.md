@@ -28,8 +28,10 @@ Freezer:
      - App.js
      - App.css
      - index.js
+     - hooks/
      - components/
           - canvas.js
+	  - toolbar.js
 
 ## Back-End
 
@@ -47,3 +49,9 @@ Freezer:
 
 - test for socket connection from front-end
 - test sending/receiving data to socket
+- test that undo/clear buttons work
+- test that canvas can be exported
+
+- test that user gets placed into room on landing page
+- test that color (,thickness, etc.) changes when choosing from toolbar
+- test that new user joins the same room as other user
