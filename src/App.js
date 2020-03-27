@@ -1,11 +1,11 @@
 import React from "react";
-import Tmp from "./Tmp.js";
+import Canvas from "./components/Canvas.js";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <Tmp />
+      <Canvas />
     </div>
   );
 }
