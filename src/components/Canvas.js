@@ -1,13 +1,15 @@
 import React from "react";
+import socketIOClient from "socket.io-client";
 
-const sendToServer = data => console.log(data);
-
-const App = () => {
+const Canvas = () => {
   const canvasRef = React.useRef(null);
   const [drawing, setDrawing] = React.useState(false);
   const [pos, setPos] = React.useState(null);
   const [prevPos, setPrevPos] = React.useState(null);
   const [line, setLine] = React.useState([]);
+
+  const socket = socketIOClient("http://localhost:8000");
+  const sendToServer = data => socket.emit("line", data);
 
   const draw = ctx => {
     ctx.beginPath();
@@ -55,4 +57,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Canvas;
