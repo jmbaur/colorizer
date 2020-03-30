@@ -1,0 +1,37 @@
+.toolbar {
+    background-color: rgb(113, 58, 222);
+    width: 200px;
+    height: 100%;
+    position: absolute;
+}
+
+.picker {
+    padding: 25px 5px 25px 14px;
+}
+
+.Btn {
+	box-shadow:inset 0px 1px 0px 0px #c6374a;
+	background:linear-gradient(to bottom, #f03535 5%, #ff599b 100%);
+	background-color:#f03535;
+	border-radius:6px;
+	border:1px solid #f65a5a;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:8px 33px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3f4d3d;
+}
+.Btn:hover {
+	background:linear-gradient(to bottom, #ff599b 5%, #f03535 100%);
+	background-color:#ff599b;
+}
+.Btn:active {
+	position:relative;
+	top:1px;
+}
+
+        
