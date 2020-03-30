@@ -57,7 +57,13 @@ const Canvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     console.log(data);
-    draw(ctx, data.x0, data.y0, data.x1, data.y1);
+    draw(
+      ctx,
+      data.x0 * window.innerWidth,
+      data.y0 * window.innerHeight,
+      data.x1 * window.innerWidth,
+      data.y1 * window.innerHeight
+    );
   }, [data]);
 
   return (
@@ -79,10 +85,10 @@ const Canvas = () => {
           setPos({ x: e.clientX, y: e.clientY });
           setLine(line => [...line, pos]);
           socket.emit("draw", {
-            x0: pos.x,
-            y0: pos.y,
-            x1: e.clientX,
-            y1: e.clientY
+            x0: pos.x / window.innerWidth,
+            y0: pos.y / window.innerHeight,
+            x1: e.clientX / window.innerWidth,
+            y1: e.clientY / window.innerHeight
           });
           draw(ctx, pos.x, pos.y, e.clientX, e.clientY);
         }}
