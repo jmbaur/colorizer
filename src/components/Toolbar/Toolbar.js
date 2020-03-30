@@ -13,15 +13,20 @@ function Toolbar() {
 
     return (
         <section className='toolbar'>
-        <div>
+        <div className='picker'>
             <h2>Pick a Color!</h2>
             <SwatchesPicker
+            width= '175px'
+            height= '350px'
             color={color}
-            onChangeComplete={handleColorChange}/>     
+            triangle='hide'
+            onChangeComplete={handleColorChange}
+            />   
         </div>
         <div className='buttons'>
-            <button>Undo</button> <br/>
-            <button>Clear</button>
+            <button className='Btn'>Undo</button> 
+            <br/><br/>
+            <button className= 'Btn'>Clear</button>
         </div>
         </section>
     )
