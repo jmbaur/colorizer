@@ -55,3 +55,5 @@ Freezer:
 - test that user gets placed into room on landing page
 - test that color (,thickness, etc.) changes when choosing from toolbar
 - test that new user joins the same room as other user
+
+##
