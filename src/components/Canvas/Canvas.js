@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import socketIOClient from "socket.io-client";
 
-const socket = socketIOClient("http://localhost:8000");
+const socket = socketIOClient("http://localhost:8000/");
 
 const Canvas = () => {
   socket.on("draw", data => setData(data));
@@ -13,8 +13,6 @@ const Canvas = () => {
   const [data, setData] = React.useState(null);
   const [line, setLine] = React.useState([]);
   const { color, thickness } = useSelector(state => state);
-  // todo
-  const thickness = useSelector(state => state.thickness);
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();

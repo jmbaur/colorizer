@@ -10,13 +10,20 @@ const ctrl = require("./controllers/socket.js");
 
 const app = express();
 
-app.use(cors({ preflightContinue: true, credentials: true }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    preflightContinue: true,
+    credentials: true
+  })
+);
 
 const SECRET = process.env.SESSION_SECRET || "secret";
 app.use(
   session({
     secret: SECRET,
     resave: false,
+    sameSite: false,
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   })
