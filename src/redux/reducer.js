@@ -1,5 +1,5 @@
 const initialState = {
-  color: "#000",
+  color: "#ff0000",
   thickness: "1px"
 };
 
