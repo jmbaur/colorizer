@@ -30,7 +30,7 @@ const Canvas = () => {
     if (!drawing) return;
 
     const storage = JSON.parse(localStorage.getItem("drawing"));
-    // console.log(storage?.lines);
+
     if (storage) {
       localStorage.setItem(
         "drawing",
@@ -56,30 +56,30 @@ const Canvas = () => {
     setDrawing(false);
   };
 
-  const load = () => {
-    const lines = JSON.parse(localStorage.getItem("drawing")).lines;
-    console.log(lines);
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    for (let i = 0; i < lines.length - 1; i++) {
-      for (let j = 0; j < lines.length - 2; j++) {
-        // draw(
-        //   ctx,
-        //   lines[i][j].x,
-        //   lines[i][j].y,
-        //   lines[i][j + 1].x,
-        //   lines[i][j + 1].y
-        // );
-      }
-    }
-  };
+  // const load = () => {
+  //   const lines = JSON.parse(localStorage.getItem("drawing")).lines;
+  //   console.log(lines);
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   for (let i = 0; i < lines.length - 1; i++) {
+  //     for (let j = 0; j < lines.length - 2; j++) {
+  //       draw(
+  //         ctx,
+  //         lines[i][j].x,
+  //         lines[i][j].y,
+  //         lines[i][j + 1].x,
+  //         lines[i][j + 1].y
+  //       );
+  //     }
+  //   }
+  // };
 
-  const clear = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    localStorage.clear();
-  };
+  // const clear = () => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   localStorage.clear();
+  // };
 
   React.useEffect(() => {
     if (!data) return;
