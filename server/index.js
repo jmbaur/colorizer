@@ -10,7 +10,7 @@ const ctrl = require("./controllers/socket.js");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ preflightContinue: true, credentials: true }));
 
 const SECRET = process.env.SESSION_SECRET || "secret";
 app.use(
@@ -18,14 +18,14 @@ app.use(
     secret: SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 3600 }
+    cookie: { maxAge: 1000 * 60 * 60 }
   })
 );
 
 const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.get("/", ctrl.getRoom);
+app.get("/api/init", ctrl.init);
 
 const io = socket(server);
 

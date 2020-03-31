@@ -1,6 +1,6 @@
 const initialState = {
   color: "#000000",
-  thickness: 2,
+  thickness: 3,
   name: "anonymous user",
   room: ""
 };
