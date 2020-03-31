@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import socketIOClient from "socket.io-client";
 
+
 const socket = socketIOClient("http://localhost:8000/");
 
 const Canvas = () => {
@@ -101,7 +102,7 @@ const Canvas = () => {
       {/* these buttons really screw up the alignment of the cursor and drawing */}
       {/* <button onClick={load}>Load</button>
       <button onClick={clear}>Clear</button> */}
-      <canvas
+      <canvas 
         ref={canvasRef}
         width={window.innerWidth}
         height={window.innerHeight}
