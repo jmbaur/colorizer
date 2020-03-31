@@ -28,7 +28,7 @@ function Toolbar() {
 
         </div>
         <div>
-            <input></input>
+            <input className='slider' type='range' min='1' max='100' />
         </div>
 
         <div className='buttons'>
