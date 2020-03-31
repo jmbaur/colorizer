@@ -1,41 +1,81 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import './Toolbar.css';
-
+import React from "react";
+import axios from "axios";
+import { store } from "../../store.js";
+import "./Toolbar.css";
 
 function Toolbar() {
+  const { state, dispatch } = React.useContext(store);
+  console.log("GLOBALSTATE", state);
 
-    //mapToProps
-    const {thickness, color} = useSelector(state => state)
-    console.log('intialState', color)
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:8000/api/init",
+      withCredentials: true
+    }).then(res => {
+      dispatch({ type: "all", payload: res.data });
+    });
+  }, [dispatch]);
 
-    //dispatchToProps
-    const dispatch = useDispatch()
+  const handleChange = e =>
+    dispatch({ type: e.target.name, payload: e.target.value });
 
+  const submit = e => {
+    axios({
+      method: "put",
+      url: "http://localhost:8000/api/user",
+      data: { [e.target.name]: e.target.value },
+      withCredentials: true
+    });
+  };
 
-    const handleChange = (e) => {
-        dispatch({type: e.target.name, payload: e.target.value})
-    }
+  return (
+    <section className="toolbar">
+      <label>Name</label>
+      <input
+        type="text"
+        name="name"
+        value={state.name}
+        onChange={handleChange}
+        onBlur={submit}
+      />
+      <label>Room</label>
+      <input
+        type="text"
+        name="room"
+        value={state.room}
+        onChange={handleChange}
+        onBlur={submit}
+      />
+      <div className="picker">
+        <h2>Pick a Color!</h2>
+        <input
+          type="color"
+          name="color"
+          value={state.color}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="sliderCont">
+        <input
+          className="slider"
+          name="thickness"
+          value={state.thickness}
+          onChange={handleChange}
+          type="range"
+          min="1"
+          max="10"
+        />
+      </div>
 
-
-    return (
-        <section className='toolbar'>
-        <div className='picker'>
-            <h2>Pick a Color!</h2>
-            <input type='color' name='SET_COLOR' value={color} onChange={handleChange}/>
-
-        </div>
-        <div className='sliderCont'>
-            <input className='slider' name='SET_THICKNESS' value={thickness} onChange={handleChange} type='range' min='1' max='10' />
-        </div>
-
-        <div className='buttons'>
-            <button className='Btn'>Undo</button> 
-            <br/><br/>
-            <button className= 'Btn'>Clear</button>
-        </div>
-        </section>
-    )
+      <div className="buttons">
+        <button className="Btn">Undo</button>
+        <br />
+        <br />
+        <button className="Btn">Clear</button>
+      </div>
+    </section>
+  );
 }
 
-export default Toolbar
+export default Toolbar;

@@ -7,7 +7,7 @@ module.exports = {
       req.session.user = {
         name: "Anonymous",
         color: "#000000",
-        thickness: 3,
+        thickness: "3",
         room: hri.random()
       };
     }
@@ -19,9 +19,10 @@ module.exports = {
     if (color) req.session.user.color = color;
     if (thickness) req.session.user.thickness = thickness;
     if (room) {
-      socket.join(room);
+      // socket.join(room);
       req.session.user.room = room;
     }
+    console.log(req.session.user);
     res.status(200).send(req.session.user);
   }
 };

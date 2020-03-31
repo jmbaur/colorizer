@@ -10,6 +10,8 @@ const ctrl = require("./controllers/socket.js");
 
 const app = express();
 
+// middlewares
+app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -17,7 +19,6 @@ app.use(
     credentials: true
   })
 );
-
 const SECRET = process.env.SESSION_SECRET || "secret";
 app.use(
   session({
@@ -33,7 +34,7 @@ const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get("/api/init", ctrl.init);
-app.get("/api/user", ctrl.setUser);
+app.put("/api/user", ctrl.setUser);
 
 const io = socket(server);
 

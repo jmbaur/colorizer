@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import socketIOClient from "socket.io-client";
-
+import { store } from "../../store.js";
 
 const socket = socketIOClient("http://localhost:8000/");
 
@@ -13,7 +12,7 @@ const Canvas = () => {
   const [pos, setPos] = React.useState(null);
   const [data, setData] = React.useState(null);
   const [line, setLine] = React.useState([]);
-  const { color, thickness } = useSelector(state => state);
+  const { state } = React.useContext(store);
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();
@@ -21,7 +20,6 @@ const Canvas = () => {
     ctx.lineTo(x1, y1);
     ctx.lineCap = "round";
     ctx.strokeStyle = colorParam;
-
     ctx.lineWidth = thicknessParam;
     ctx.stroke();
     ctx.closePath();
@@ -102,7 +100,7 @@ const Canvas = () => {
       {/* these buttons really screw up the alignment of the cursor and drawing */}
       {/* <button onClick={load}>Load</button>
       <button onClick={clear}>Clear</button> */}
-      <canvas 
+      <canvas
         ref={canvasRef}
         width={window.innerWidth}
         height={window.innerHeight}
@@ -125,10 +123,18 @@ const Canvas = () => {
             y0: pos.y / window.innerHeight,
             x1: e.clientX / window.innerWidth,
             y1: e.clientY / window.innerHeight,
-            color,
-            thickness
+            color: state.color,
+            thickness: state.thickness
           });
-          draw(ctx, pos.x, pos.y, e.clientX, e.clientY, color, thickness);
+          draw(
+            ctx,
+            pos.x,
+            pos.y,
+            e.clientX,
+            e.clientY,
+            state.color,
+            state.thickness
+          );
         }}
       />
     </div>
