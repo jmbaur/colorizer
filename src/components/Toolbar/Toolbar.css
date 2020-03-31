@@ -20,8 +20,28 @@ input[type="color"] {
 	outline: none;
 }
 
+.sliderCont {
+	padding: 10px 0 20px;
+}
 
+.slider {
+	-webkit-appearance: none;
+	width: 85%;
+	height: 8px;
+	border-radius: 10px;
+	background: rgb(95, 255, 2);
+	outline: none;
+	opacity: 0.8;
+	transition: opacity .10s;
+  }
 
+  .slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #4CAF50;
+	cursor: pointer;
+  }
+  
 .Btn {
 	box-shadow:inset 0px 1px 0px 0px #c6374a;
 	background:linear-gradient(to bottom, #f03535 5%, #ff599b 100%);

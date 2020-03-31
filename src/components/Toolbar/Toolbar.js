@@ -6,29 +6,27 @@ import './Toolbar.css';
 function Toolbar() {
 
     //mapToProps
-    const color = useSelector(state => state.color)
+    const {thickness, color} = useSelector(state => state)
     console.log('intialState', color)
 
     //dispatchToProps
     const dispatch = useDispatch()
 
 
-    const handleColorChange = (e) => {
+    const handleChange = (e) => {
         dispatch({type: e.target.name, payload: e.target.value})
     }
-
-
 
 
     return (
         <section className='toolbar'>
         <div className='picker'>
             <h2>Pick a Color!</h2>
-            <input type='color' name='SET_COLOR' value={color} onChange={handleColorChange}/>
+            <input type='color' name='SET_COLOR' value={color} onChange={handleChange}/>
 
         </div>
-        <div>
-            <input className='slider' type='range' min='1' max='100' />
+        <div className='sliderCont'>
+            <input className='slider' name='SET_THICKNESS' value={thickness} onChange={handleChange} type='range' min='1' max='10' />
         </div>
 
         <div className='buttons'>

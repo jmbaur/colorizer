@@ -14,14 +14,14 @@ const Canvas = () => {
   const [line, setLine] = React.useState([]);
   const color = useSelector(state => state.color);
   // todo
-  // const thickness = useSelector(state => state.thickness);
+  const thickness = useSelector(state => state.thickness);
 
-  const draw = (ctx, x0, y0, x1, y1, colorParam) => {
+  const draw = (ctx, x0, y0, x1, y1, colorParam, thickness) => {
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.lineTo(x1, y1);
     ctx.strokeStyle = colorParam;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = thickness;
     ctx.stroke();
     ctx.closePath();
   };
@@ -125,7 +125,7 @@ const Canvas = () => {
             y1: e.clientY / window.innerHeight,
             color
           });
-          draw(ctx, pos.x, pos.y, e.clientX, e.clientY, color);
+          draw(ctx, pos.x, pos.y, e.clientX, e.clientY, color, thickness);
         }}
       />
     </div>
