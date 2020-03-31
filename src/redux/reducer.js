@@ -1,24 +1,19 @@
 const initialState = {
-  color: "#ff0000",
-  thickness: "1px"
+  color: "#000000",
+  thickness: "1px",
+  name: "anonymous user",
+  room: ""
 };
 
 const SET_COLOR = "SET_COLOR";
 const SET_THICKNESS = "SET_THICKNESS";
+const SET_NAME = "SET_NAME";
+const SET_ROOM = "SET_ROOM";
 
-export function getSettings() {}
-
-export function setColor(color) {
+export function setSetting({ type, payload }) {
   return {
-    type: SET_COLOR,
-    payload: color
-  };
-}
-
-export function setThickness(thickness) {
-  return {
-    type: SET_THICKNESS,
-    payload: thickness
+    type,
+    payload
   };
 }
 
@@ -28,6 +23,10 @@ export default function reducer(state = initialState, action) {
       return { ...state, color: action.payload };
     case SET_THICKNESS:
       return { ...state, thickness: action.payload };
+    case SET_NAME:
+      return { ...state, name: action.payload };
+    case SET_ROOM:
+      return { ...state, room: action.payload };
     default:
       return state;
   }
