@@ -33,6 +33,7 @@ const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get("/api/init", ctrl.init);
+app.get("/api/user", ctrl.setUser);
 
 const io = socket(server);
 

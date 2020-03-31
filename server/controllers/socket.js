@@ -7,19 +7,20 @@ module.exports = {
       req.session.user = {
         name: "Anonymous",
         color: "#000000",
+        thickness: 3,
         room: hri.random()
       };
-      console.log("new user");
-    } else {
-      console.log("existing user");
     }
-    console.log(req.session, req.sessionID);
     res.status(200).send(req.session.user);
   },
-  setName: (req, res) => {
-    const { name } = req.body;
-    if (!req.session.user.name) {
-      req.session.user.name = name;
+  setUser: (req, res) => {
+    const { name, color, room, thickness } = req.body;
+    if (name) req.session.user.name = name;
+    if (color) req.session.user.color = color;
+    if (thickness) req.session.user.thickness = thickness;
+    if (room) {
+      socket.join(room);
+      req.session.user.room = room;
     }
     res.status(200).send(req.session.user);
   }
