@@ -14,7 +14,7 @@ const Canvas = () => {
   const [line, setLine] = React.useState([]);
   const { color, thickness } = useSelector(state => state);
   // todo
-  // const thickness = useSelector(state => state.thickness);
+  const thickness = useSelector(state => state.thickness);
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();
@@ -22,6 +22,7 @@ const Canvas = () => {
     ctx.lineTo(x1, y1);
     ctx.lineCap = "round";
     ctx.strokeStyle = colorParam;
+
     ctx.lineWidth = thicknessParam;
     ctx.stroke();
     ctx.closePath();
