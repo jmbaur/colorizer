@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import socketIOClient from "socket.io-client";
 
 const socket = socketIOClient("http://localhost:8000");
@@ -12,16 +12,17 @@ const Canvas = () => {
   const [pos, setPos] = React.useState(null);
   const [data, setData] = React.useState(null);
   const [line, setLine] = React.useState([]);
-  const color = useSelector(state => state.color);
+  const { color, thickness } = useSelector(state => state);
   // todo
   // const thickness = useSelector(state => state.thickness);
 
-  const draw = (ctx, x0, y0, x1, y1, colorParam) => {
+  const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();
     ctx.moveTo(x0, y0);
     ctx.lineTo(x1, y1);
+    ctx.lineCap = "round";
     ctx.strokeStyle = colorParam;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = thicknessParam;
     ctx.stroke();
     ctx.closePath();
   };
@@ -56,30 +57,30 @@ const Canvas = () => {
     setDrawing(false);
   };
 
-  const load = () => {
-    const lines = JSON.parse(localStorage.getItem("drawing")).lines;
-    console.log(lines);
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    for (let i = 0; i < lines.length - 1; i++) {
-      for (let j = 0; j < lines.length - 2; j++) {
-        // draw(
-        //   ctx,
-        //   lines[i][j].x,
-        //   lines[i][j].y,
-        //   lines[i][j + 1].x,
-        //   lines[i][j + 1].y
-        // );
-      }
-    }
-  };
+  // const load = () => {
+  //   const lines = JSON.parse(localStorage.getItem("drawing")).lines;
+  //   console.log(lines);
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   for (let i = 0; i < lines.length - 1; i++) {
+  //     for (let j = 0; j < lines.length - 2; j++) {
+  // draw(
+  //   ctx,
+  //   lines[i][j].x,
+  //   lines[i][j].y,
+  //   lines[i][j + 1].x,
+  //   lines[i][j + 1].y
+  // );
+  //     }
+  //   }
+  // };
 
-  const clear = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    localStorage.clear();
-  };
+  // const clear = () => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   localStorage.clear();
+  // };
 
   React.useEffect(() => {
     if (!data) return;
@@ -91,7 +92,8 @@ const Canvas = () => {
       data.y0 * window.innerHeight,
       data.x1 * window.innerWidth,
       data.y1 * window.innerHeight,
-      data.color
+      data.color,
+      data.thickness
     );
   }, [data]);
 
@@ -123,9 +125,10 @@ const Canvas = () => {
             y0: pos.y / window.innerHeight,
             x1: e.clientX / window.innerWidth,
             y1: e.clientY / window.innerHeight,
-            color
+            color,
+            thickness
           });
-          draw(ctx, pos.x, pos.y, e.clientX, e.clientY, color);
+          draw(ctx, pos.x, pos.y, e.clientX, e.clientY, color, thickness);
         }}
       />
     </div>

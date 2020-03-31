@@ -1,6 +1,6 @@
 const initialState = {
   color: "#000000",
-  thickness: "1px",
+  thickness: 3,
   name: "anonymous user",
   room: ""
 };
@@ -9,13 +9,6 @@ const SET_COLOR = "SET_COLOR";
 const SET_THICKNESS = "SET_THICKNESS";
 const SET_NAME = "SET_NAME";
 const SET_ROOM = "SET_ROOM";
-
-export function setSetting({ type, payload }) {
-  return {
-    type,
-    payload
-  };
-}
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

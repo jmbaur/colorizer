@@ -6,7 +6,7 @@ import "./App.css";
 
 function App() {
   React.useEffect(() => {
-    axios.get("http://localhost:8000/").then(res => console.log(res.data));
+    axios.get("http://localhost:8000/api/init").then(res => console.log(res.data));
   });
   return (
     <div className="App">
