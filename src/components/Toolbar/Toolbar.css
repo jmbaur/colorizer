@@ -1,7 +1,8 @@
+
 .toolbar {
     /* background-color: rgb(113, 58, 222); */
-    width: 200px;
-    height: 100%;
+	width: 200px;
+	height: 100%;
 	position: absolute;
 	font-family: 'Gloria Hallelujah', cursive;
 	text-align: center;
@@ -9,22 +10,37 @@
 
 }
 
-.picker {
-	padding: 25px 10px 20px 14px;
-	background: -webkit-linear-gradient(rgb(229, 95, 0), rgb(255, 230, 0));
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
 
-.info {
+ /*UserInfoSection*/ 
+.userInfo {
 	padding: 25px 10px 5px 14px;
 	font-size: 1.5rem;
 	line-height: 1.7;
 }
-
 label {
-	background: -webkit-linear-gradient(rgb(131, 255, 59), rgb(255, 77, 0));
-	-webkit-background-clip: text;
+	background: linear-gradient(rgb(131, 255, 59), rgb(255, 77, 0));
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+}
+.userInfo > input {
+	border: none;
+	border-radius: 2px;
+	height: 25px;
+	width: 150px;
+	outline: none;
+	text-align: center;
+}
+
+.usersWhoJoin{
+	font-size: 1.5rem;
+}
+
+ /*PickAColorSecton*/ 
+ .pickerInput {
+	padding: 25px 10px 20px 14px;
+	background: linear-gradient(rgb(229, 95, 0), rgb(255, 230, 0));
+	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
@@ -37,19 +53,12 @@ input[type="color"] {
 	outline: none;
 }
 
-.info > input {
-	border: none;
-	border-radius: 2px;
-	height: 25px;
-	width: 150px;
-	outline: none;
-}
 
-.sliderCont {
+ /*StokeSlider*/ 
+.sliderContainer {
 	padding: 10px 0 20px;
 }
-
-.slider {
+.sliderInput {
 	-webkit-appearance: none;
 	width: 85%;
 	height: 8px;
@@ -60,13 +69,8 @@ input[type="color"] {
 	transition: opacity .10s;
   }
 
-  .slider::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	background: #4CAF50;
-	cursor: pointer;
-  }
   
+ /*Buttons*/ 
 .Btn {
 	box-shadow:inset 0px 1px 0px 0px #c6374a;
 	background:linear-gradient(to bottom, #f03535 5%, #ff599b 100%);
@@ -82,6 +86,7 @@ input[type="color"] {
 	padding:5px 33px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #3f4d3d;
+	margin-bottom: 25px;
 }
 .Btn:hover {
 	background:linear-gradient(to bottom, #ff599b 5%, #f03535 100%);
@@ -92,4 +97,16 @@ input[type="color"] {
 	top:1px;
 }
 
-        
+/* .App {
+	display: grid;
+	grid-template-columns: repeat(3, 200px);
+
+}        
+
+.toolbar {
+	grid-column: 1;
+	width: 200px;
+}
+.canvasCont {
+	grid-column: 2/4;
+} */

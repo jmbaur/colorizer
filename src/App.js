@@ -6,10 +6,12 @@ import "./App.css";
 
 function App() {
   return (
+    <div className='App'>
     <StateProvider>
       <Toolbar />
       <Canvas />
     </StateProvider>
+    </div>
   );
 }
 
