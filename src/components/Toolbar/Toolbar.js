@@ -1,18 +1,23 @@
 import React from "react";
 import axios from "axios";
+import socketIOClient from "socket.io-client";
 import { store } from "../../store.js";
 import "./Toolbar.css";
+
+const socket = socketIOClient("http://localhost:8000/");
 
 function Toolbar() {
   const { state, dispatch } = React.useContext(store);
   console.log("GLOBALSTATE", state);
 
   React.useEffect(() => {
+    console.log("hit");
     axios({
       method: "get",
       url: "http://localhost:8000/api/init",
       withCredentials: true
     }).then(res => {
+      socket.emit("join", res.data);
       dispatch({ type: "all", payload: res.data });
     });
   }, [dispatch]);
@@ -27,6 +32,7 @@ function Toolbar() {
       data: { [e.target.name]: e.target.value },
       withCredentials: true
     });
+    socket.emit("join", state);
   };
 
   return (

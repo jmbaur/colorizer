@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
 
-let initialState = {
+const initialState = {
   color: "#000000",
   thickness: "3",
   name: "Anonymous",
-  room: ""
+  room: "",
+  oldRoom: ""
 };
 
 const store = React.createContext(initialState);
@@ -13,10 +14,9 @@ const { Provider } = store;
 
 const StateProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer((state, action) => {
-    console.log("state", state);
     switch (action.type) {
       case "all":
-        return { ...state, ...action.payload };
+        return { ...state, ...action.payload, oldRoom: action.payload.room };
       case "color":
         axios({
           method: "put",

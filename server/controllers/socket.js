@@ -18,11 +18,9 @@ module.exports = {
     if (name) req.session.user.name = name;
     if (color) req.session.user.color = color;
     if (thickness) req.session.user.thickness = thickness;
-    if (room) {
-      // socket.join(room);
-      req.session.user.room = room;
-    }
-    console.log(req.session.user);
+    if (room) req.session.user.room = room;
+
+    // console.log(req.session.user);
     res.status(200).send(req.session.user);
   }
 };
