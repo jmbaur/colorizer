@@ -12,8 +12,11 @@ const store = React.createContext(initialState);
 const { Provider } = store;
 
 const StateProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer((_state, action) => {
+  const [state, dispatch] = React.useReducer((state, action) => {
+    console.log("state", state);
     switch (action.type) {
+      case "all":
+        return { ...state, ...action.payload };
       case "color":
         axios({
           method: "put",
@@ -21,8 +24,7 @@ const StateProvider = ({ children }) => {
           data: { [action.type]: action.payload },
           withCredentials: true
         });
-        initialState.color = action.payload;
-        return { ...initialState, color: action.payload };
+        return { ...state, color: action.payload };
       case "thickness":
         axios({
           method: "put",
@@ -30,17 +32,11 @@ const StateProvider = ({ children }) => {
           data: { [action.type]: action.payload },
           withCredentials: true
         });
-        initialState.thickness = action.payload;
-        return { ...initialState, thickness: action.payload };
+        return { ...state, thickness: action.payload };
       case "name":
-        initialState.name = action.payload;
-        return { ...initialState, name: action.payload };
+        return { ...state, name: action.payload };
       case "room":
-        initialState.room = action.payload;
-        return { ...initialState, room: action.payload };
-      case "all":
-        initialState = action.payload;
-        return { ...initialState, ...action.payload };
+        return { ...state, room: action.payload };
       default:
         throw new Error();
     }
