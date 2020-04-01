@@ -39,16 +39,15 @@ app.put("/api/user", ctrl.setUser);
 const io = socket(server);
 
 io.on("connection", socket => {
-  let socketRoom;
   socket.on("join", ({ room, oldRoom }) => {
     // socket.leave(Object.keys(socket.rooms)[0]);
     if (oldRoom) socket.leave(oldRoom);
-    socketRoom = room;
-    socket.join(room, data => {
+    socket.join(room);
+
+    socket.broadcast.to(room).emit("room", "new user joined");
+
+    socket.on("draw", data => {
       console.log(socket.rooms);
     });
-  });
-  socket.on("draw", data => {
-    console.log(socket.rooms);
   });
 });

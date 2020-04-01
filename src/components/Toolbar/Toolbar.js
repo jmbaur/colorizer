@@ -1,12 +1,11 @@
 import React from "react";
 import axios from "axios";
-import socketIOClient from "socket.io-client";
 import { store } from "../../store.js";
 import "./Toolbar.css";
 
-const socket = socketIOClient("http://localhost:8000/");
+function Toolbar(props) {
+  props.socket.on("room", data => console.log(data));
 
-function Toolbar() {
   const { state, dispatch } = React.useContext(store);
   console.log("GLOBALSTATE", state);
 
@@ -17,10 +16,10 @@ function Toolbar() {
       url: "http://localhost:8000/api/init",
       withCredentials: true
     }).then(res => {
-      socket.emit("join", res.data);
+      props.socket.emit("join", res.data);
       dispatch({ type: "all", payload: res.data });
     });
-  }, [dispatch]);
+  }, [dispatch, props.socket]);
 
   const handleChange = e =>
     dispatch({ type: e.target.name, payload: e.target.value });
@@ -32,14 +31,12 @@ function Toolbar() {
       data: { [e.target.name]: e.target.value },
       withCredentials: true
     });
-    socket.emit("join", state);
+    props.socket.emit("join", state);
   };
 
   return (
     <section className="toolbar">
-      <div className='info'>
       <label>Name</label>
-      <br/>
       <input
         type="text"
         name="name"
@@ -47,9 +44,7 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
-      <br/>
       <label>Room</label>
-      <br/>
       <input
         type="text"
         name="room"
@@ -57,7 +52,6 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
-      </div>
       <div className="picker">
         <h2>Pick a Color!</h2>
         <input
