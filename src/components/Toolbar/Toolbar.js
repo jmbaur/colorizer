@@ -31,9 +31,11 @@ function Toolbar() {
 
   return (
     <section className="toolbar">
-      <div className='info'>
+
+      <div className='sidebar'>
+      {/*userSection*/} 
+      <div className='userInfo'>
       <label>Name</label>
-      <br/>
       <input
         type="text"
         name="name"
@@ -41,9 +43,7 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
-      <br/>
       <label>Room</label>
-      <br/>
       <input
         type="text"
         name="room"
@@ -52,7 +52,12 @@ function Toolbar() {
         onBlur={submit}
       />
       </div>
-      <div className="picker">
+      <div className='usersWhoJoin'>
+      <label>Online</label>
+      </div>
+
+      {/*ColorSection*/} 
+      <div className="pickerInput">
         <h2>Pick a Color!</h2>
         <input
           type="color"
@@ -61,9 +66,11 @@ function Toolbar() {
           onChange={handleChange}
         />
       </div>
-      <div className="sliderCont">
+
+      {/*SliderSection*/} 
+      <div className="sliderContainer">
         <input
-          className="slider"
+          className="sliderInput"
           name="thickness"
           value={state.thickness}
           onChange={handleChange}
@@ -73,12 +80,12 @@ function Toolbar() {
         />
       </div>
 
+      {/*ButtonsSection*/} 
       <div className="buttons">
         <button className="Btn">Undo</button>
-        <br />
-        <br />
         <button className="Btn">Clear</button>
       </div>
+    </div>
     </section>
   );
 }
