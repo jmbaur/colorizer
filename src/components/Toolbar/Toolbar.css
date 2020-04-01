@@ -1,14 +1,31 @@
 .toolbar {
-    background-color: rgb(113, 58, 222);
+    /* background-color: rgb(113, 58, 222); */
     width: 200px;
     height: 100%;
 	position: absolute;
 	font-family: 'Gloria Hallelujah', cursive;
+	text-align: center;
+	background: -webkit-linear-gradient(rgb(101, 59, 255), rgb(87, 46, 190));
 
 }
 
 .picker {
-	padding: 25px 10px 25px 14px;
+	padding: 25px 10px 20px 14px;
+	background: -webkit-linear-gradient(rgb(229, 95, 0), rgb(255, 230, 0));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.info {
+	padding: 25px 10px 5px 14px;
+	font-size: 1.5rem;
+	line-height: 1.7;
+}
+
+label {
+	background: -webkit-linear-gradient(rgb(131, 255, 59), rgb(255, 77, 0));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 input[type="color"] {
@@ -17,6 +34,14 @@ input[type="color"] {
 	height: 50px;
 	background-color: #00ff9d;
 	border: none;
+	outline: none;
+}
+
+.info > input {
+	border: none;
+	border-radius: 2px;
+	height: 25px;
+	width: 150px;
 	outline: none;
 }
 

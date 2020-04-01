@@ -31,7 +31,9 @@ function Toolbar() {
 
   return (
     <section className="toolbar">
+      <div className='info'>
       <label>Name</label>
+      <br/>
       <input
         type="text"
         name="name"
@@ -39,7 +41,9 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
+      <br/>
       <label>Room</label>
+      <br/>
       <input
         type="text"
         name="room"
@@ -47,6 +51,7 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
+      </div>
       <div className="picker">
         <h2>Pick a Color!</h2>
         <input
