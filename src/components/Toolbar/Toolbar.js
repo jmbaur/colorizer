@@ -51,13 +51,14 @@ function Toolbar(props) {
         onBlur={submit}
       />
       <label>Room</label>
-      <input
+      <p>{state.room}</p>
+      {/* <input
         type="text"
         name="room"
         value={state.room}
         onChange={handleChange}
         onBlur={submit}
-      />
+      /> */}
 
       </div>
       <div className='usersWhoJoin'>
