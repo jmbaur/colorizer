@@ -4,6 +4,7 @@ import Landing from "./components/Landing/Landing.js";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
 import { store } from "./store.js";
+import './reset.css';
 import "./App.css";
 
 const socket = socketIOClient("http://localhost:8000/");

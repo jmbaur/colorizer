@@ -1,24 +1,34 @@
 
 .toolbar {
-    /* background-color: rgb(113, 58, 222); */
-	width: 200px;
+	width: 150px;
 	height: 100%;
 	position: absolute;
 	font-family: 'Gloria Hallelujah', cursive;
 	text-align: center;
 	background: -webkit-linear-gradient(rgb(101, 59, 255), rgb(87, 46, 190));
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
 
+
+.innerRoom {
+	display: inline-block;
+	vertical-align: middle;
 }
 
 
  /*UserInfoSection*/ 
 .userInfo {
-	padding: 25px 10px 5px 14px;
+	padding: 20px 0 10px;
+
+}
+
+.userInfo > label {
 	font-size: 1.5rem;
-	line-height: 1.4;
 }
 label {
-	background: linear-gradient(rgb(131, 255, 59), rgb(255, 77, 0));
+	background: linear-gradient(rgb(144, 53, 0), rgb(255, 77, 0));
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 
@@ -27,25 +37,27 @@ label {
 	border: none;
 	border-radius: 2px;
 	height: 25px;
-	width: 150px;
+	width: 100px;
 	outline: none;
 	text-align: center;
 }
 
 .usersWhoJoin{
 	font-size: 1.5rem;
+	height: 100px;
+	padding-top: 50px;
 }
 
 p {
-	font-size: 1.2rem;
-	background: linear-gradient(rgb(239, 0, 0), rgb(255, 115, 0));
+	font-size: 1rem;
+	background: linear-gradient(rgb(255, 230, 1), rgb(0, 255, 51));
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
  /*PickAColorSecton*/ 
  .pickerInput {
-	padding: 25px 10px 20px 14px;
+	padding: 50px 10px 20px 14px;
 	background: linear-gradient(rgb(229, 95, 0), rgb(255, 230, 0));
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -53,8 +65,8 @@ p {
 
 input[type="color"] {
 	border-radius: 5px;
-	width: 110px;
-	height: 50px;
+	width: 100px;
+	height: 45px;
 	background-color: #00ff9d;
 	border: none;
 	outline: none;
@@ -67,13 +79,11 @@ input[type="color"] {
 }
 .sliderInput {
 	-webkit-appearance: none;
-	width: 85%;
-	height: 8px;
-	border-radius: 10px;
-	background: rgb(95, 255, 2);
-	outline: none;
-	opacity: 0.8;
-	transition: opacity .10s;
+	width: 75%;
+	height: 5px;
+	border-radius: 5px;
+	background: rgb(0, 221, 255);
+	outline: none;	
   }
 
   
@@ -90,10 +100,10 @@ input[type="color"] {
 	font-family: 'Gloria Hallelujah', cursive;
 	font-size:.85rem;
 	font-weight:bold;
-	padding:5px 33px;
+	padding:2px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #3f4d3d;
-	margin-bottom: 25px;
+	/* margin-bottom: 25px; */
 }
 .Btn:hover {
 	background:linear-gradient(to bottom, #ff599b 5%, #f03535 100%);
@@ -103,17 +113,3 @@ input[type="color"] {
 	position:relative;
 	top:1px;
 }
-
-/* .App {
-	display: grid;
-	grid-template-columns: repeat(3, 200px);
-
-}        
-
-.toolbar {
-	grid-column: 1;
-	width: 200px;
-}
-.canvasCont {
-	grid-column: 2/4;
-} */

@@ -35,9 +35,9 @@ function Toolbar(props) {
 
   return (
     <section className="toolbar">
-      <div className="sidebar">
+      
         <div className="userInfo">
-          <label>Name</label>
+          <label>Username:</label>
           {!changeName ? (
             <p onClick={() => setChangeName(true)}>{state.name}</p>
           ) : (
@@ -49,8 +49,10 @@ function Toolbar(props) {
               onBlur={handleSubmit}
             />
           )}
+          <br/>
           <label>Room</label>
           <p>{state.room}</p>
+          <br/>
           <button className='Btn'
             onClick={() => {
               props.socket.emit("leave", state);
@@ -59,14 +61,17 @@ function Toolbar(props) {
           >
             Leave Room
           </button>
-        </div>
+          </div>
+        
         <div className="usersWhoJoin">
           <label>Online</label>
+          
           <Room room={room} />
         </div>
 
         <div className="pickerInput">
-          <h2>Pick a Color!</h2>
+          <p>Pick a Color!</p>
+          <br/>
           <input
             type="color"
             name="color"
@@ -93,7 +98,7 @@ function Toolbar(props) {
           <button className="Btn">Undo</button>
           <button className="Btn">Clear</button>
         </div>
-      </div>
+ 
     </section>
   );
 }
