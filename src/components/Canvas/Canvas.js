@@ -1,8 +1,10 @@
 import React from "react";
 import { store } from "../../store.js";
 
-const Canvas = (props) => {
-  props.socket.on("draw", data => setData(data));
+const Canvas = props => {
+  props.socket.on("draw", data => {
+    setData(data);
+  });
 
   const canvasRef = React.useRef(null);
   const [drawing, setDrawing] = React.useState(false);
@@ -93,7 +95,7 @@ const Canvas = (props) => {
   }, [data]);
 
   return (
-    <div className ='canvasCont'>
+    <div className="canvasCont">
       {/* these buttons really screw up the alignment of the cursor and drawing */}
       {/* <button onClick={load}>Load</button>
       <button onClick={clear}>Clear</button> */}
@@ -116,12 +118,15 @@ const Canvas = (props) => {
           setPos({ x: e.clientX, y: e.clientY });
           setLine(line => [...line, pos]);
           props.socket.emit("draw", {
-            x0: pos.x / window.innerWidth,
-            y0: pos.y / window.innerHeight,
-            x1: e.clientX / window.innerWidth,
-            y1: e.clientY / window.innerHeight,
-            color: state.color,
-            thickness: state.thickness
+            room: state.room,
+            data: {
+              x0: pos.x / window.innerWidth,
+              y0: pos.y / window.innerHeight,
+              x1: e.clientX / window.innerWidth,
+              y1: e.clientY / window.innerHeight,
+              color: state.color,
+              thickness: state.thickness
+            }
           });
           draw(
             ctx,

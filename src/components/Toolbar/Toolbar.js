@@ -9,7 +9,7 @@ function Toolbar(props) {
   props.socket.on("room", data => setRoom(data.users));
 
   const { state, dispatch } = React.useContext(store);
-  const [name, bindName, resetName] = useInput(state.name);
+  const [name, bindName] = useInput(state.name);
   const [changeName, setChangeName] = React.useState(false);
   const [room, setRoom] = React.useState([]);
 
@@ -51,7 +51,8 @@ function Toolbar(props) {
           )}
           <label>Room</label>
           <p>{state.room}</p>
-          <button className='Btn'
+          <button
+            className="Btn"
             onClick={() => {
               props.socket.emit("leave", state);
               dispatch({ type: "room", payload: "" });
