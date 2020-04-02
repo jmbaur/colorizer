@@ -1,0 +1,19 @@
+.landingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(237, 254, 0, 0.644);
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+}
+

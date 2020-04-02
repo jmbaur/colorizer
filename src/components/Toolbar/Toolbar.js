@@ -38,7 +38,7 @@ function Toolbar(props) {
           />
           <label>Room</label>
           <p>{state.room}</p>
-          <button
+          <button className='Btn'
             onClick={() => {
               props.socket.emit("leave", state);
               dispatch({ type: "room", payload: "" });

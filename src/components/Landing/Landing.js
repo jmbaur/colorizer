@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
+import './Landing.css';
 
 const Landing = () => {
   const { state, dispatch } = React.useContext(store);
@@ -28,10 +29,14 @@ const Landing = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className='landingPage'>
+
+      <form className='loginForm'
+      onSubmit={handleSubmit}>
         <label>Name</label>
+       
         <input type="text" {...bindName} />
+        <div>
         <label>New Room</label>
         <input
           type="radio"
@@ -39,6 +44,8 @@ const Landing = () => {
           onChange={handleChange}
           checked={selected === "newRoom"}
         />
+        </div>
+        <div>
         <label>Existing Room</label>
         <input
           type="radio"
@@ -46,14 +53,18 @@ const Landing = () => {
           onChange={handleChange}
           checked={selected === "existingRoom"}
         />
+        </div>
         {selected === "existingRoom" ? (
           <>
             <label>Room</label>
             <input type="text" {...bindRoom} />
           </>
         ) : null}
-        <button type="submit">Start drawing!</button>
+     
+        <button className='Btn' type="submit">Start drawing!</button>
+     
       </form>
+
     </div>
   );
 };
