@@ -11,7 +11,6 @@ module.exports = {
     }
   },
   getRoomUsers: room => {
-    console.log("ROOM", users);
     return users.filter(el => el.room === room);
   },
   removeFromRoom: user => {

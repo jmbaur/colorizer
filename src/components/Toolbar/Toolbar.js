@@ -2,14 +2,16 @@ import React from "react";
 import axios from "axios";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
+import Room from "../Room/Room.js";
 import "./Toolbar.css";
 
 function Toolbar(props) {
-  props.socket.on("room", data => console.log(data));
+  props.socket.on("room", data => setRoom(data.users));
 
   const { state, dispatch } = React.useContext(store);
   const [name, bindName, resetName] = useInput(state.name);
   const [changeName, setChangeName] = React.useState(false);
+  const [room, setRoom] = React.useState([]);
 
   const handleChange = e => {
     dispatch({ type: e.target.name, payload: e.target.value });
@@ -60,6 +62,7 @@ function Toolbar(props) {
         </div>
         <div className="usersWhoJoin">
           <label>Online</label>
+          <Room room={room} />
         </div>
 
         <div className="pickerInput">
