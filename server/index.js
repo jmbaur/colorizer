@@ -6,7 +6,7 @@ const session = require("express-session");
 const socket = require("socket.io");
 const cors = require("cors");
 
-const { init, setUser } = require("./controllers/session.js");
+const { init, setUser, getUser } = require("./controllers/session.js");
 const {
   addToRoom,
   removeFromRoom,
@@ -39,7 +39,8 @@ const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.post("/api/init", init);
-app.put("/api/user", setUser);
+app.put("/api/setUser", setUser);
+app.get("/api/getUser", getUser);
 
 const io = socket(server);
 

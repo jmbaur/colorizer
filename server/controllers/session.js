@@ -44,5 +44,8 @@ module.exports = {
     if (color) req.session.user.color = color;
     if (thickness) req.session.user.thickness = thickness;
     res.status(200).send(req.session.user);
+  },
+  getUser: (req, res) => {
+    res.status(200).send(req.session.user);
   }
 };
