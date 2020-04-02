@@ -1,11 +1,8 @@
 import React from "react";
-import socketIOClient from "socket.io-client";
 import { store } from "../../store.js";
 
-const socket = socketIOClient("http://localhost:8000/");
-
-const Canvas = () => {
-  socket.on("draw", data => setData(data));
+const Canvas = (props) => {
+  props.socket.on("draw", data => setData(data));
 
   const canvasRef = React.useRef(null);
   const [drawing, setDrawing] = React.useState(false);
@@ -118,7 +115,7 @@ const Canvas = () => {
           // const rect = canvas.getBoundingClientRect();
           setPos({ x: e.clientX, y: e.clientY });
           setLine(line => [...line, pos]);
-          socket.emit("draw", {
+          props.socket.emit("draw", {
             x0: pos.x / window.innerWidth,
             y0: pos.y / window.innerHeight,
             x1: e.clientX / window.innerWidth,

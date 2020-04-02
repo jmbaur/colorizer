@@ -3,19 +3,24 @@ import axios from "axios";
 import { store } from "../../store.js";
 import "./Toolbar.css";
 
-function Toolbar() {
+function Toolbar(props) {
+  props.socket.on("room", data => console.log(data));
+  props.socket.on("roomUsers", data => console.log(data));
+
   const { state, dispatch } = React.useContext(store);
   console.log("GLOBALSTATE", state);
 
   React.useEffect(() => {
+    console.log("hit");
     axios({
       method: "get",
       url: "http://localhost:8000/api/init",
       withCredentials: true
     }).then(res => {
+      props.socket.emit("join", res.data);
       dispatch({ type: "all", payload: res.data });
     });
-  }, [dispatch]);
+  }, [dispatch, props.socket]);
 
   const handleChange = e =>
     dispatch({ type: e.target.name, payload: e.target.value });
@@ -27,19 +32,21 @@ function Toolbar() {
       data: { [e.target.name]: e.target.value },
       withCredentials: true
     });
+    props.socket.emit("join", state);
   };
 
   return (
     <section className="toolbar">
-
       <div className='sidebar'>
-      {/*userSection*/} 
+
       <div className='userInfo'>
+
       <label>Name</label>
       <input
         type="text"
         name="name"
         value={state.name}
+        placeholder="Change your name"
         onChange={handleChange}
         onBlur={submit}
       />
@@ -51,12 +58,13 @@ function Toolbar() {
         onChange={handleChange}
         onBlur={submit}
       />
+
       </div>
       <div className='usersWhoJoin'>
       <label>Online</label>
       </div>
 
-      {/*ColorSection*/} 
+
       <div className="pickerInput">
         <h2>Pick a Color!</h2>
         <input
