@@ -10,7 +10,8 @@ const { init, setUser, getUser } = require("./controllers/session.js");
 const {
   addToRoom,
   removeFromRoom,
-  getRoomUsers
+  getRoomUsers,
+  modifyUserInRoom
 } = require("./controllers/socket.js");
 
 const app = express();
@@ -47,20 +48,27 @@ const io = socket(server);
 
 io.on("connection", socket => {
   socket.on("join", user => {
-    if (user.oldRoom) socket.leave(user.oldRoom);
-    if (user.room !== user.oldRoom) {
-      socket.join(user.room);
-      addToRoom(user);
+    socket.join(user.room);
+    addToRoom(user);
 
-      // broadcast when a user connects
-      socket.broadcast.to(user.room).emit("room", user.name);
+    // // broadcast when a user connects
+    // socket.broadcast.to(user.room).emit("room", user.name);
 
-      // send users and room info
-      io.to(user.room).emit("roomUsers", {
-        room: user.room,
-        users: getRoomUsers(user.room)
-      });
-    }
+    // send users and room info
+    io.to(user.room).emit("room", {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  // listen for user changes
+  socket.on("change", user => {
+    console.log(user);
+    addToRoom(user);
+    io.to(user.room).emit("room", {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
   });
 
   // listen for leave message

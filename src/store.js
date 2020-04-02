@@ -19,7 +19,7 @@ const StateProvider = ({ children }) => {
       case "color":
         axios({
           method: "put",
-          url: "http://localhost:8000/api/user",
+          url: "http://localhost:8000/api/setUser",
           data: { [action.type]: action.payload },
           withCredentials: true
         });
@@ -27,7 +27,7 @@ const StateProvider = ({ children }) => {
       case "thickness":
         axios({
           method: "put",
-          url: "http://localhost:8000/api/user",
+          url: "http://localhost:8000/api/setUser",
           data: { [action.type]: action.payload },
           withCredentials: true
         });

@@ -1,41 +1,52 @@
 import React from "react";
 import axios from "axios";
 import { store } from "../../store.js";
+import useInput from "../../hooks/useInput.js";
 import "./Toolbar.css";
 
 function Toolbar(props) {
   props.socket.on("room", data => console.log(data));
-  props.socket.on("roomUsers", data => console.log(data));
 
   const { state, dispatch } = React.useContext(store);
-  console.log("GLOBALSTATE", state);
+  const [name, bindName, resetName] = useInput(state.name);
+  const [changeName, setChangeName] = React.useState(false);
 
-  const handleChange = e =>
+  const handleChange = e => {
     dispatch({ type: e.target.name, payload: e.target.value });
+  };
 
-  const submit = e => {
+  const handleSubmit = e => {
     axios({
       method: "put",
-      url: "http://localhost:8000/api/user",
-      data: { [e.target.name]: e.target.value },
+      url: "http://localhost:8000/api/setUser",
+      data: { name },
       withCredentials: true
     });
-    props.socket.emit("join", state);
+    dispatch({ type: "name", payload: e.target.value });
+    props.socket.emit("change", state);
+    setChangeName(false);
   };
+
+  React.useEffect(() => {
+    props.socket.emit("change", state);
+  }, [state, props.socket]);
 
   return (
     <section className="toolbar">
       <div className="sidebar">
         <div className="userInfo">
           <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={state.name}
-            placeholder="Change your name"
-            onChange={handleChange}
-            onBlur={submit}
-          />
+          {!changeName ? (
+            <p onClick={() => setChangeName(true)}>{state.name}</p>
+          ) : (
+            <input
+              type="text"
+              name="name"
+              placeholder="Change your name"
+              {...bindName}
+              onBlur={handleSubmit}
+            />
+          )}
           <label>Room</label>
           <p>{state.room}</p>
           <button

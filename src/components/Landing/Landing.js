@@ -3,7 +3,7 @@ import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 
-const Landing = () => {
+const Landing = (props) => {
   const { state, dispatch } = React.useContext(store);
 
   const [name, bindName, resetName] = useInput(state.name || "");
@@ -21,7 +21,10 @@ const Landing = () => {
       url: "http://localhost:8000/api/init",
       data: { name, newRoom: selected === "newRoom", room },
       withCredentials: true
-    }).then(res => dispatch({ type: "all", payload: res.data }));
+    }).then(res => {
+      props.socket.emit("join", res.data);
+      dispatch({ type: "all", payload: res.data });
+    });
     resetName();
     resetRoom();
     setSelected("newRoom");

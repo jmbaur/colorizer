@@ -1,9 +1,12 @@
 import React from "react";
 import Container from "./components/Container/Container.js";
 import Landing from "./components/Landing/Landing.js";
+import socketIOClient from "socket.io-client";
 import axios from "axios";
 import { store } from "./store.js";
 import "./App.css";
+
+const socket = socketIOClient("http://localhost:8000/");
 
 function App() {
   const { state, dispatch } = React.useContext(store);
@@ -18,7 +21,11 @@ function App() {
 
   return (
     <div className="App">
-      {!state.room || !state.name ? <Landing /> : <Container />}
+      {!state.room ? (
+        <Landing socket={socket} />
+      ) : (
+        <Container socket={socket} />
+      )}
     </div>
   );
 }

@@ -29,7 +29,8 @@ module.exports = {
             : co(lor);
         })(""),
       thickness: "3",
-      name
+      name,
+      id: req.session.id
     };
     if (newRoom) {
       req.session.user.room = hri.random();
