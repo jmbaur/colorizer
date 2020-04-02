@@ -36,6 +36,7 @@ const Landing = () => {
         <label>Name</label>
        
         <input type="text" {...bindName} />
+        <div className='loginInnerC'>
         <div>
         <label>New Room</label>
         <input
@@ -56,13 +57,13 @@ const Landing = () => {
         </div>
         {selected === "existingRoom" ? (
           <>
-            <label>Room</label>
+            <label>Room</label><br/>
             <input type="text" {...bindRoom} />
           </>
         ) : null}
-     
+     </div>
         <button className='Btn' type="submit">Start drawing!</button>
-     
+  
       </form>
 
     </div>
