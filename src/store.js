@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   color: "#000000",
   thickness: "3",
-  name: "Anonymous",
+  name: "",
   room: "",
   oldRoom: ""
 };

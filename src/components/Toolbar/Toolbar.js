@@ -5,6 +5,7 @@ import "./Toolbar.css";
 
 function Toolbar(props) {
   props.socket.on("room", data => console.log(data));
+  props.socket.on("roomUsers", data => console.log(data));
 
   const { state, dispatch } = React.useContext(store);
   console.log("GLOBALSTATE", state);
@@ -41,6 +42,7 @@ function Toolbar(props) {
         type="text"
         name="name"
         value={state.name}
+        placeholder="Change your name"
         onChange={handleChange}
         onBlur={submit}
       />
