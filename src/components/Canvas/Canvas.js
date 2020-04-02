@@ -93,7 +93,7 @@ const Canvas = (props) => {
   }, [data]);
 
   return (
-    <div>
+    <div className ='canvasCont'>
       {/* these buttons really screw up the alignment of the cursor and drawing */}
       {/* <button onClick={load}>Load</button>
       <button onClick={clear}>Clear</button> */}

@@ -9,10 +9,12 @@ const socket = socketIOClient("http://localhost:8000/");
 
 function App() {
   return (
+    <div className='App'>
     <StateProvider>
       <Toolbar socket={socket} />
       <Canvas socket={socket} />
     </StateProvider>
+    </div>
   );
 }
 
