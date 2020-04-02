@@ -38,7 +38,7 @@ app.use(
 const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.get("/api/init", init);
+app.post("/api/init", init);
 app.put("/api/user", setUser);
 
 const io = socket(server);

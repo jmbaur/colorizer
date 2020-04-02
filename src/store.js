@@ -5,8 +5,7 @@ const initialState = {
   color: "#000000",
   thickness: "3",
   name: "",
-  room: "",
-  oldRoom: ""
+  room: ""
 };
 
 const store = React.createContext(initialState);
@@ -16,7 +15,7 @@ const StateProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer((state, action) => {
     switch (action.type) {
       case "all":
-        return { ...state, ...action.payload, oldRoom: action.payload.room };
+        return { ...state, ...action.payload };
       case "color":
         axios({
           method: "put",
