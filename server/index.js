@@ -6,7 +6,12 @@ const session = require("express-session");
 const socket = require("socket.io");
 const cors = require("cors");
 
-const ctrl = require("./controllers/socket.js");
+const { init, setUser } = require("./controllers/session.js");
+const {
+  addToRoom,
+  removeFromRoom,
+  getRoomUsers
+} = require("./controllers/socket.js");
 
 const app = express();
 
@@ -33,21 +38,31 @@ app.use(
 const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.get("/api/init", ctrl.init);
-app.put("/api/user", ctrl.setUser);
+app.get("/api/init", init);
+app.put("/api/user", setUser);
 
 const io = socket(server);
 
 io.on("connection", socket => {
-  socket.on("join", ({ room, oldRoom }) => {
-    // socket.leave(Object.keys(socket.rooms)[0]);
-    if (oldRoom) socket.leave(oldRoom);
-    socket.join(room);
+  socket.on("join", user => {
+    if (user.oldRoom) socket.leave(user.oldRoom);
+    if (user.room !== user.oldRoom) {
+      socket.join(user.room);
+      addToRoom(user);
 
-    socket.broadcast.to(room).emit("room", "new user joined");
+      // broadcast when a user connects
+      socket.broadcast.to(user.room).emit("room", user.name);
 
-    socket.on("draw", data => {
-      console.log(socket.rooms);
-    });
+      // send users and room info
+      io.to(user.room).emit("roomUsers", {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+
+  // listen for drawing message
+  socket.on("draw", data => {
+    console.log(socket.rooms);
   });
 });
