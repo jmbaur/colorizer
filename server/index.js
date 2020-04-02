@@ -45,6 +45,12 @@ app.put("/api/setUser", setUser);
 app.get("/api/getUser", getUser);
 
 const io = socket(server);
+const sendRoom = room => {
+  io.to(room).emit("room", {
+    room: room,
+    users: getRoomUsers(room)
+  });
+};
 
 io.on("connection", socket => {
   socket.on("join", user => {
@@ -55,29 +61,25 @@ io.on("connection", socket => {
     // socket.broadcast.to(user.room).emit("room", user.name);
 
     // send users and room info
-    io.to(user.room).emit("room", {
-      room: user.room,
-      users: getRoomUsers(user.room)
-    });
+    sendRoom(user.room);
   });
 
   // listen for user changes
   socket.on("change", user => {
-    console.log(user);
     addToRoom(user);
-    io.to(user.room).emit("room", {
-      room: user.room,
-      users: getRoomUsers(user.room)
-    });
+    sendRoom(user.room);
   });
 
   // listen for leave message
   socket.on("leave", user => {
+    removeFromRoom(user);
     socket.leave(user.room);
+    sendRoom(user.room);
   });
 
   // listen for drawing message
   socket.on("draw", data => {
-    console.log(socket.rooms);
+    // console.log(data);
+    io.to(data.room).emit("draw", data.data);
   });
 });
