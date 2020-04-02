@@ -38,6 +38,7 @@ app.use(
 const port = process.env.SERVER_PORT || 8080;
 const server = app.listen(port, () => console.log(`Listening on port ${port}`));
 
+// endpoints
 app.post("/api/init", init);
 app.put("/api/setUser", setUser);
 app.get("/api/getUser", getUser);
@@ -60,6 +61,11 @@ io.on("connection", socket => {
         users: getRoomUsers(user.room)
       });
     }
+  });
+
+  // listen for leave message
+  socket.on("leave", user => {
+    socket.leave(user.room);
   });
 
   // listen for drawing message

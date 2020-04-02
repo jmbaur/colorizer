@@ -7,6 +7,7 @@ import "./App.css";
 
 function App() {
   const { state, dispatch } = React.useContext(store);
+
   React.useEffect(() => {
     axios({
       method: "get",
@@ -14,6 +15,7 @@ function App() {
       withCredentials: true
     }).then(res => dispatch({ type: "all", payload: res.data }));
   }, [dispatch]);
+
   return (
     <div className="App">
       {!state.room || !state.name ? <Landing /> : <Container />}

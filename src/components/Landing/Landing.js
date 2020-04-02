@@ -4,9 +4,9 @@ import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 
 const Landing = () => {
-  const { dispatch } = React.useContext(store);
+  const { state, dispatch } = React.useContext(store);
 
-  const [name, bindName, resetName] = useInput("");
+  const [name, bindName, resetName] = useInput(state.name || "");
   const [room, bindRoom, resetRoom] = useInput("");
   const [selected, setSelected] = React.useState("newRoom");
 
