@@ -15,7 +15,7 @@
 .userInfo {
 	padding: 25px 10px 5px 14px;
 	font-size: 1.5rem;
-	line-height: 1.7;
+	line-height: 1.4;
 }
 label {
 	background: linear-gradient(rgb(131, 255, 59), rgb(255, 77, 0));
@@ -34,6 +34,13 @@ label {
 
 .usersWhoJoin{
 	font-size: 1.5rem;
+}
+
+p {
+	font-size: 1.2rem;
+	background: linear-gradient(rgb(239, 0, 0), rgb(255, 115, 0));
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
  /*PickAColorSecton*/ 

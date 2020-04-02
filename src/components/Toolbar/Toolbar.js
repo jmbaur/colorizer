@@ -25,29 +25,25 @@ function Toolbar(props) {
 
   return (
     <section className="toolbar">
-      <div className="sidebar">
-        <div className="userInfo">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={state.name}
-            placeholder="Change your name"
-            onChange={handleChange}
-            onBlur={submit}
-          />
-          <label>Room</label>
-          <input
-            type="text"
-            name="room"
-            value={state.room}
-            onChange={handleChange}
-            onBlur={submit}
-          />
-        </div>
-        <div className="usersWhoJoin">
-          <label>Online</label>
-        </div>
+      <div className='sidebar'>
+
+      <div className='userInfo'>
+
+      <label>Name</label>
+      <input
+        type="text"
+        name="name"
+        value={state.name}
+        placeholder="Change your name"
+        onChange={handleChange}
+        onBlur={submit}
+      />
+      <label>Room</label>
+      <p>{state.room}</p>
+      </div>
+      <div className='usersWhoJoin'>
+      <label>Online</label>
+      </div>
 
         <div className="pickerInput">
           <h2>Pick a Color!</h2>
