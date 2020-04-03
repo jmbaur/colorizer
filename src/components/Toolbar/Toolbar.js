@@ -52,7 +52,10 @@ function Toolbar(props) {
           <br/>
           <label>Room</label>
           <p>{state.room}</p>
+<<<<<<< HEAD
           <br/>
+=======
+>>>>>>> 8f6c2c3f975888e74548bda17fb607c1f82bc622
           <button className='Btn'
             onClick={() => {
               props.socket.emit("leave", state);
