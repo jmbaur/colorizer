@@ -106,3 +106,7 @@ input[type="color"] {
 	position:relative;
 	top:1px;
 }
+
+.export {
+	padding: 8px;
+}

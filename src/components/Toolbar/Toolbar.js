@@ -106,9 +106,14 @@ const Toolbar = props => {
       {/*ButtonsSection*/}
       <div className="buttons">
         <button className="Btn">Undo</button>
+        &nbsp;
         <button className="Btn" onClick={() => props.clearCanvas(true)}>
           Clear
         </button>
+        <br/>
+        <div className='export'>
+        <button className="Btn" onClick={() => props.handleDownload(true)}>Export Art</button>
+        </div>   
       </div>
 
     </section>

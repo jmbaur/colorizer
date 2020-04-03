@@ -6,11 +6,16 @@ import Toolbar from "../Toolbar/Toolbar.js";
 const Container = props => {
   // const { state } = React.useContext(store);
   const [clear, setClear] = React.useState(false);
+  const [download, setDownload] = React.useState(false);
 
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
     setClear(bool);
   };
+
+  const handleDownload = bool => {
+    setDownload(bool)
+  }
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();
@@ -25,12 +30,14 @@ const Container = props => {
 
   return (
     <div className="container">
-      <Toolbar socket={props.socket} clearCanvas={clearCanvas} />
+      <Toolbar socket={props.socket} clearCanvas={clearCanvas} handleDownload={handleDownload} />
       <Canvas
         socket={props.socket}
         draw={draw}
         clear={clear}
         clearCanvas={clearCanvas}
+        download={download}
+        handleDownload={handleDownload}
       />
     </div>
   );
