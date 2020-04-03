@@ -6,7 +6,9 @@ import Room from "../Room/Room.js";
 import "./Toolbar.css";
 
 function Toolbar(props) {
-  props.socket.on("room", data => setRoom(data.users));
+  props.socket.on("room", data => {
+    setRoom(data.users);
+  });
 
   const { state, dispatch } = React.useContext(store);
   const [name, bindName] = useInput(state.name);
@@ -30,6 +32,7 @@ function Toolbar(props) {
   };
 
   React.useEffect(() => {
+    console.log(state);
     props.socket.emit("change", state);
   }, [state, props.socket]);
 

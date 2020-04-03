@@ -5,7 +5,7 @@ const initialState = {
   color: "#000000",
   thickness: "3",
   name: "",
-  room: ""
+  room: "",
 };
 
 const store = React.createContext(initialState);
@@ -36,6 +36,8 @@ const StateProvider = ({ children }) => {
         return { ...state, name: action.payload };
       case "room":
         return { ...state, room: action.payload };
+      case "members":
+        return { ...state, members: action.payload };
       default:
         throw new Error();
     }
