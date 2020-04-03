@@ -25,10 +25,9 @@ app.use(
     credentials: true
   })
 );
-const SECRET = process.env.SESSION_SECRET || "secret";
 app.use(
   session({
-    secret: SECRET,
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     sameSite: false,
     saveUninitialized: true,
@@ -62,6 +61,7 @@ io.on("connection", socket => {
     addToRoom(user);
 
     // send users and room info
+    io.to(user.room).emit("roomRequest");
     sendRoom(user.room);
   });
 

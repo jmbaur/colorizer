@@ -8,8 +8,15 @@ import "./Toolbar.css";
 const Toolbar = props => {
   props.socket.on("room", data => {
     setRoom(data.users);
-    localStorage.setItem("room", JSON.stringify(data.users));
   });
+  // props.socket.on("rooom", data => {
+  //   const currRoom = JSON.parse(localStorage.getItem("room")) || [];
+  //   const index = currRoom.findIndex(user => (user.id = data.id));
+  //   if (index !== -1) currRoom.splice(1, index);
+  //   console.log(index);
+  //   console.log([...currRoom, data]);
+  //   localStorage.setItem("room", JSON.stringify([...currRoom, data]));
+  // });
 
   const { state, dispatch } = React.useContext(store);
   const [name, bindName] = useInput(state.name);
@@ -35,11 +42,6 @@ const Toolbar = props => {
   React.useEffect(() => {
     props.socket.emit("change", state);
   }, [state, props.socket]);
-
-  React.useEffect(() => {
-    const currRoom = localStorage.getItem("room");
-    console.log(currRoom);
-  }, [room]);
 
   return (
     <section className="toolbar">
