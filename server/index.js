@@ -5,6 +5,7 @@ const express = require("express");
 const session = require("express-session");
 const socket = require("socket.io");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const { init, setUser, getUser } = require("./controllers/session.js");
 const {
@@ -15,6 +16,11 @@ const {
 } = require("./controllers/socket.js");
 
 const app = express();
+
+// connect to DB
+mongoose.connect(process.env.CONN_STR, { useUnifiedTopology: true }, () =>
+  console.log("connected to DB")
+);
 
 // middlewares
 app.use(express.json());
@@ -58,11 +64,11 @@ io.on("connection", socket => {
 
   socket.on("join", user => {
     socket.join(user.room);
-    addToRoom(user);
+    // addToRoom(user);
 
     // send users and room info
     io.to(user.room).emit("roomRequest");
-    sendRoom(user.room);
+    // sendRoom(user.room);
   });
 
   // listen for user changes
@@ -73,7 +79,8 @@ io.on("connection", socket => {
 
   // listen for request for all users in room
   socket.on("room", user => {
-    sendRoom(user.room);
+    // sendRoom(user.room);
+    io.to(user.room).emit("room", user);
   });
 
   // listen for leave message

@@ -7,16 +7,9 @@ import "./Toolbar.css";
 
 const Toolbar = props => {
   props.socket.on("room", data => {
+    const index = room.findIndex(el => el.id === data.id);
     setRoom(data.users);
   });
-  // props.socket.on("rooom", data => {
-  //   const currRoom = JSON.parse(localStorage.getItem("room")) || [];
-  //   const index = currRoom.findIndex(user => (user.id = data.id));
-  //   if (index !== -1) currRoom.splice(1, index);
-  //   console.log(index);
-  //   console.log([...currRoom, data]);
-  //   localStorage.setItem("room", JSON.stringify([...currRoom, data]));
-  // });
 
   const { state, dispatch } = React.useContext(store);
   const [name, bindName] = useInput(state.name);
@@ -62,7 +55,7 @@ const Toolbar = props => {
         <br />
         <label>Room</label>
         <p>{state.room}</p>
-        <br/>
+        <br />
         <button
           className="Btn"
           onClick={() => {
@@ -104,7 +97,6 @@ const Toolbar = props => {
         />
       </div>
 
-
       {/*ButtonsSection*/}
       <div className="buttons">
         <button className="Btn">Undo</button>
@@ -117,7 +109,6 @@ const Toolbar = props => {
         <button className="Btn" onClick={() => props.handleDownload(true)}>Export Art</button>
         </div>   
       </div>
-
     </section>
   );
 };
