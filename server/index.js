@@ -5,16 +5,6 @@ const express = require("express");
 const session = require("express-session");
 const socket = require("socket.io");
 const cors = require("cors");
-// const MongoClient = require("mongooose").MongoClient;
-// const assert = require("assert");
-// const client = new MongoClient(process.env.CONN_STR, {
-//   useUnifiedTopology: true
-// });
-// client.connect(err => {
-//   assert.equal(null, err);
-//   console.log("connected to mongo server");
-//   client.close();
-// });
 
 const { init, setUser, getUser } = require("./controllers/session.js");
 const {
