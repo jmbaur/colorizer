@@ -8,7 +8,7 @@ const Container = props => {
   // const { dispatch } = React.useContext(store);
   // need functions here that help with drawing, clearing, undoing, etc.
   return (
-    <div>
+    <div className='container'>
       <Toolbar socket={props.socket} />
       <Canvas socket={props.socket} />
     </div>
