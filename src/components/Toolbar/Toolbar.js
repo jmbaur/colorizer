@@ -46,6 +46,7 @@ function Toolbar(props) {
             placeholder="Change your name"
             {...bindName}
             onBlur={handleSubmit}
+            autoFocus
           />
         )}
         <br />

@@ -36,11 +36,10 @@ const Landing = (props) => {
 
       <form className='loginForm'
       onSubmit={handleSubmit}>
-        <label>Name</label>
-       
-        <input type="text" {...bindName} />
+        <label className='name'>Name</label>
+        <input type="text" {...bindName} autoFocus/>
         <div className='loginInnerC'>
-        <div>
+        <div className='newRoom'>
         <label>New Room</label>
         <input
           type="radio"
