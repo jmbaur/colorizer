@@ -11,13 +11,6 @@
 	flex-direction: column;
 }
 
-
-.innerRoom {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-
  /*UserInfoSection*/ 
 .userInfo {
 	padding: 20px 0 10px;
@@ -36,7 +29,7 @@ label {
 .userInfo > input {
 	border: none;
 	border-radius: 2px;
-	height: 25px;
+	height: 15px;
 	width: 100px;
 	outline: none;
 	text-align: center;

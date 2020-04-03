@@ -1,4 +1,5 @@
 import React from "react";
+import './Room.css'
 
 const Room = props => {
   const mappedUsers = props.room.map(user => {
@@ -12,7 +13,7 @@ const Room = props => {
             backgroundColor: user.color
           }}
         ></div>
-        {user.name}
+       {user.name}
       </div>
     );
   });

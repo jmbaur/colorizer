@@ -47,12 +47,14 @@ function Toolbar(props) {
               placeholder="Change your name"
               {...bindName}
               onBlur={handleSubmit}
+              autofocus
             />
           )}
           <br/>
           <label>Room</label>
           <p>{state.room}</p>
 
+            <br/>
           <button className='Btn'
 
             onClick={() => {
@@ -96,8 +98,10 @@ function Toolbar(props) {
 
         {/*ButtonsSection*/}
         <div className="buttons">
-          <button className="Btn">Undo</button>
-          <button className="Btn">Clear</button>
+          <button className="Btn one">Undo</button>
+            &nbsp;
+          <button className="Btn two">Clear</button>
+  
         </div>
  
     </section>
