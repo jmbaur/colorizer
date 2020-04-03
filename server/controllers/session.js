@@ -40,10 +40,11 @@ module.exports = {
     res.status(200).send(req.session.user);
   },
   setUser: (req, res) => {
-    const { name, color, thickness } = req.body;
+    const { name, room, color, thickness } = req.body;
     if (name) req.session.user.name = name;
     if (color) req.session.user.color = color;
     if (thickness) req.session.user.thickness = thickness;
+    if (room === "") req.session.user.room = "";
     res.status(200).send(req.session.user);
   },
   getUser: (req, res) => {

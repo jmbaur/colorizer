@@ -1,16 +1,37 @@
 import React from "react";
-// import axios from "axios";
-// import { store } from "../../store.js";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
+// import { store } from "../../store.js";
 
 const Container = props => {
-  // const { dispatch } = React.useContext(store);
+  // const { state } = React.useContext(store);
+  const [clear, setClear] = React.useState(false);
+
   // need functions here that help with drawing, clearing, undoing, etc.
+  const clearCanvas = bool => {
+    setClear(bool);
+  };
+
+  const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.lineCap = "round";
+    ctx.strokeStyle = colorParam;
+    ctx.lineWidth = thicknessParam;
+    ctx.stroke();
+    ctx.closePath();
+  };
+
   return (
-    <div className='container'>
-      <Toolbar socket={props.socket} />
-      <Canvas socket={props.socket} />
+    <div className="container">
+      <Toolbar socket={props.socket} clearCanvas={clearCanvas} />
+      <Canvas
+        socket={props.socket}
+        draw={draw}
+        clear={clear}
+        clearCanvas={clearCanvas}
+      />
     </div>
   );
 };

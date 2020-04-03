@@ -45,20 +45,21 @@ app.put("/api/setUser", setUser);
 app.get("/api/getUser", getUser);
 
 const io = socket(server);
+
 const sendRoom = room => {
   io.to(room).emit("room", {
     room: room,
     users: getRoomUsers(room)
   });
+  console.log("ROOM", getRoomUsers(room));
 };
 
 io.on("connection", socket => {
+  socket.on("hi", () => socket.emit("hi", "hi"));
+
   socket.on("join", user => {
     socket.join(user.room);
     addToRoom(user);
-
-    // // broadcast when a user connects
-    // socket.broadcast.to(user.room).emit("room", user.name);
 
     // send users and room info
     sendRoom(user.room);
@@ -67,6 +68,11 @@ io.on("connection", socket => {
   // listen for user changes
   socket.on("change", user => {
     addToRoom(user);
+    sendRoom(user.room);
+  });
+
+  // listen for request for all users in room
+  socket.on("room", user => {
     sendRoom(user.room);
   });
 
@@ -79,7 +85,6 @@ io.on("connection", socket => {
 
   // listen for drawing message
   socket.on("draw", data => {
-    // console.log(data);
     io.to(data.room).emit("draw", data.data);
   });
 });
