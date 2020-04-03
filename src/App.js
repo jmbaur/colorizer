@@ -4,7 +4,7 @@ import Landing from "./components/Landing/Landing.js";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
 import { store } from "./store.js";
-import './reset.css';
+import "./reset.css";
 import "./App.css";
 
 const socket = socketIOClient("http://localhost:8000/");
@@ -17,7 +17,12 @@ function App() {
       method: "get",
       url: "http://localhost:8000/api/getUser",
       withCredentials: true
-    }).then(res => dispatch({ type: "all", payload: res.data }));
+    }).then(res => {
+      dispatch({ type: "all", payload: res.data });
+      if (res.data.room) {
+        socket.emit("join", res.data);
+      }
+    });
   }, [dispatch]);
 
   return (

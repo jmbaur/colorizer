@@ -4,6 +4,7 @@ import Toolbar from "../Toolbar/Toolbar.js";
 // import { store } from "../../store.js";
 
 const Container = props => {
+  // const { state } = React.useContext(store);
   const [clear, setClear] = React.useState(false);
 
   // need functions here that help with drawing, clearing, undoing, etc.
@@ -11,11 +12,26 @@ const Container = props => {
     setClear(bool);
   };
 
-  console.log(clear);
+  const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.lineCap = "round";
+    ctx.strokeStyle = colorParam;
+    ctx.lineWidth = thicknessParam;
+    ctx.stroke();
+    ctx.closePath();
+  };
+
   return (
     <div className="container">
       <Toolbar socket={props.socket} clearCanvas={clearCanvas} />
-      <Canvas socket={props.socket} clear={clear} clearCanvas={clearCanvas} />
+      <Canvas
+        socket={props.socket}
+        draw={draw}
+        clear={clear}
+        clearCanvas={clearCanvas}
+      />
     </div>
   );
 };

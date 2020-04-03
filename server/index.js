@@ -51,7 +51,7 @@ const sendRoom = room => {
     room: room,
     users: getRoomUsers(room)
   });
-  console.log(getRoomUsers(room));
+  console.log("ROOM", getRoomUsers(room));
 };
 
 io.on("connection", socket => {
@@ -85,7 +85,6 @@ io.on("connection", socket => {
 
   // listen for drawing message
   socket.on("draw", data => {
-    // console.log(data);
     io.to(data.room).emit("draw", data.data);
   });
 });

@@ -8,6 +8,7 @@ import "./Toolbar.css";
 const Toolbar = props => {
   props.socket.on("room", data => {
     setRoom(data.users);
+    localStorage.setItem("room", JSON.stringify(data.users));
   });
 
   const { state, dispatch } = React.useContext(store);
@@ -32,9 +33,13 @@ const Toolbar = props => {
   };
 
   React.useEffect(() => {
-    console.log(state);
     props.socket.emit("change", state);
   }, [state, props.socket]);
+
+  React.useEffect(() => {
+    const currRoom = localStorage.getItem("room");
+    console.log(currRoom);
+  }, [room]);
 
   return (
     <section className="toolbar">

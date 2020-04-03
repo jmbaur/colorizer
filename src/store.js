@@ -5,7 +5,7 @@ const initialState = {
   color: "#000000",
   thickness: "3",
   name: "",
-  room: "",
+  room: ""
 };
 
 const store = React.createContext(initialState);
@@ -32,10 +32,16 @@ const StateProvider = ({ children }) => {
           withCredentials: true
         });
         return { ...state, thickness: action.payload };
+      case "room":
+        axios({
+          method: "put",
+          url: "http://localhost:8000/api/setUser",
+          data: { [action.type]: action.payload },
+          withCredentials: true
+        });
+        return { ...state, room: action.payload };
       case "name":
         return { ...state, name: action.payload };
-      case "room":
-        return { ...state, room: action.payload };
       case "members":
         return { ...state, members: action.payload };
       default:

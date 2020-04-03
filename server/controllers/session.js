@@ -41,7 +41,6 @@ module.exports = {
   },
   setUser: (req, res) => {
     const { name, room, color, thickness } = req.body;
-    console.log("ROOM", room);
     if (name) req.session.user.name = name;
     if (color) req.session.user.color = color;
     if (thickness) req.session.user.thickness = thickness;
