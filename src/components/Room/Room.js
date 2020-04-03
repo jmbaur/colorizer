@@ -1,4 +1,5 @@
 import React from "react";
+import './Room.css';
 
 const Room = props => {
   const mappedUsers = props.room.map(user => {

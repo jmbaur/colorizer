@@ -35,73 +35,73 @@ function Toolbar(props) {
 
   return (
     <section className="toolbar">
-      
-        <div className="userInfo">
-          <label>Username:</label>
-          {!changeName ? (
-            <p onClick={() => setChangeName(true)}>{state.name}</p>
-          ) : (
-            <input
-              type="text"
-              name="name"
-              placeholder="Change your name"
-              {...bindName}
-              onBlur={handleSubmit}
-            />
-          )}
-          <br/>
-          <label>Room</label>
-          <p>{state.room}</p>
-<<<<<<< HEAD
-          <br/>
-=======
->>>>>>> 8f6c2c3f975888e74548bda17fb607c1f82bc622
-          <button className='Btn'
-            onClick={() => {
-              props.socket.emit("leave", state);
-              dispatch({ type: "room", payload: "" });
-            }}
-          >
-            Leave Room
-          </button>
-          </div>
-        
-        <div className="usersWhoJoin">
-          <label>Online</label>
-          
-          <Room room={room} />
-        </div>
-
-        <div className="pickerInput">
-          <p>Pick a Color!</p>
-          <br/>
+      <div className="userInfo">
+        <label>Username:</label>
+        {!changeName ? (
+          <p onClick={() => setChangeName(true)}>{state.name}</p>
+        ) : (
           <input
-            type="color"
-            name="color"
-            value={state.color}
-            onChange={handleChange}
+            type="text"
+            name="name"
+            placeholder="Change your name"
+            {...bindName}
+            onBlur={handleSubmit}
           />
-        </div>
+        )}
+        <br />
+        <label>Room</label>
+        <p>{state.room}</p>
+        <br/>
+        <button
+          className="Btn"
+          onClick={() => {
+            props.socket.emit("leave", state);
+            dispatch({ type: "room", payload: "" });
+          }}
+        >
+          Leave Room
+        </button>
+      </div>
 
-        {/*SliderSection*/}
-        <div className="sliderContainer">
-          <input
-            className="sliderInput"
-            name="thickness"
-            value={state.thickness}
-            onChange={handleChange}
-            type="range"
-            min="1"
-            max="10"
-          />
-        </div>
 
-        {/*ButtonsSection*/}
-        <div className="buttons">
-          <button className="Btn">Undo</button>
-          <button className="Btn">Clear</button>
-        </div>
- 
+      <div className="usersWhoJoin">
+        <label>Online</label>
+
+        <Room room={room} />
+      </div>
+
+      <div className="pickerInput">
+        <p>Pick a Color!</p>
+        <br />
+        <input
+          type="color"
+          name="color"
+          value={state.color}
+          onChange={handleChange}
+        />
+      </div>
+
+      {/*SliderSection*/}
+      <div className="sliderContainer">
+        <input
+          className="sliderInput"
+          name="thickness"
+          value={state.thickness}
+          onChange={handleChange}
+          type="range"
+          min="1"
+          max="10"
+        />
+      </div>
+
+      {/*ButtonsSection*/}
+      <div className="buttons">
+        <button className="Btn">Undo</button>
+        &nbsp;
+        <button className="Btn" onClick={() => props.clearCanvas(true)}>
+          Clear
+        </button>
+      </div>
     </section>
   );
 }
