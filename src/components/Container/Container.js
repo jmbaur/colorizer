@@ -4,20 +4,18 @@ import Toolbar from "../Toolbar/Toolbar.js";
 // import { store } from "../../store.js";
 
 const Container = props => {
+  const [clear, setClear] = React.useState(false);
+
   // need functions here that help with drawing, clearing, undoing, etc.
+  const clearCanvas = bool => {
+    setClear(bool);
+  };
 
-  // const { state } = React.useContext(store);
-  // props.socket.on("room", data => console.log(data));
-
-  // React.useEffect(() => {
-  //   console.log("hitttt");
-  //   props.socket.emit("room", state);
-  // });
-
+  console.log(clear);
   return (
-    <div className='container'>
-      <Toolbar socket={props.socket} />
-      <Canvas socket={props.socket} />
+    <div className="container">
+      <Toolbar socket={props.socket} clearCanvas={clearCanvas} />
+      <Canvas socket={props.socket} clear={clear} clearCanvas={clearCanvas} />
     </div>
   );
 };

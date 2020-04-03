@@ -72,13 +72,6 @@ const Canvas = props => {
   //   }
   // };
 
-  // const clear = () => {
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext("2d");
-  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //   localStorage.clear();
-  // };
-
   React.useEffect(() => {
     if (!data) return;
     const canvas = canvasRef.current;
@@ -93,6 +86,15 @@ const Canvas = props => {
       data.thickness
     );
   }, [data]);
+
+  React.useEffect(() => {
+    if (!props.clear) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    localStorage.clear();
+    props.clearCanvas(false);
+  }, [props]);
 
   return (
     <div className="canvasCont">
