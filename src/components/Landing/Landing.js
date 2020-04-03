@@ -59,6 +59,7 @@ const Landing = props => {
           {selected === "existingRoom" ? (
             <input type="text" placeholder="Enter room name" {...bindRoom} />
           ) : null}
+
         </div>
         <button className="Btn" type="submit">
           Start drawing!

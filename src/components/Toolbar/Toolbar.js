@@ -54,12 +54,13 @@ const Toolbar = props => {
             placeholder="Change your name"
             {...bindName}
             onBlur={handleSubmit}
+            autoFocus
           />
         )}
         <br />
         <label>Room</label>
         <p>{state.room}</p>
-
+        <br/>
         <button
           className="Btn"
           onClick={() => {
