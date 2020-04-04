@@ -1,17 +1,21 @@
 import React from "react";
 import axios from "axios";
+import { socketInst } from "../../socket.js";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
 import Room from "../Room/Room.js";
 import "./Toolbar.css";
 
 const Toolbar = props => {
-  props.socket.on("room", data => {
+  const socket = React.useContext(socketInst);
+  console.log("SOCKET", socket);
+  const { state, dispatch } = React.useContext(store);
+
+  socket.on("room", data => {
     const index = room.findIndex(el => el.id === data.id);
     setRoom(data.users);
   });
 
-  const { state, dispatch } = React.useContext(store);
   const [name, bindName] = useInput(state.name);
   const [changeName, setChangeName] = React.useState(false);
   const [room, setRoom] = React.useState([]);
@@ -28,13 +32,13 @@ const Toolbar = props => {
       withCredentials: true
     });
     dispatch({ type: "name", payload: e.target.value });
-    props.socket.emit("change", state);
+    socket.emit("change", state);
     setChangeName(false);
   };
 
   React.useEffect(() => {
-    props.socket.emit("change", state);
-  }, [state, props.socket]);
+    socket.emit("change", state);
+  }, [state, socket]);
 
   return (
     <section className="toolbar">
@@ -59,7 +63,7 @@ const Toolbar = props => {
         <button
           className="Btn"
           onClick={() => {
-            props.socket.emit("leave", state);
+            socket.emit("leave", state);
             dispatch({ type: "room", payload: "" });
           }}
         >
@@ -104,10 +108,12 @@ const Toolbar = props => {
         <button className="Btn" onClick={() => props.clearCanvas(true)}>
           Clear
         </button>
-        <br/>
-        <div className='export'>
-        <button className="Btn" onClick={() => props.handleDownload(true)}>Export Art</button>
-        </div>   
+        <br />
+        <div className="export">
+          <button className="Btn" onClick={() => props.handleDownload(true)}>
+            Export Art
+          </button>
+        </div>
       </div>
     </section>
   );

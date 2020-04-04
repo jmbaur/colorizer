@@ -64,11 +64,10 @@ io.on("connection", socket => {
 
   socket.on("join", user => {
     socket.join(user.room);
-    // addToRoom(user);
+    addToRoom(user);
 
     // send users and room info
-    io.to(user.room).emit("roomRequest");
-    // sendRoom(user.room);
+    sendRoom(user.room);
   });
 
   // listen for user changes
@@ -79,8 +78,7 @@ io.on("connection", socket => {
 
   // listen for request for all users in room
   socket.on("room", user => {
-    // sendRoom(user.room);
-    io.to(user.room).emit("room", user);
+    sendRoom(user.room);
   });
 
   // listen for leave message

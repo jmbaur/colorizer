@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { StateProvider } from "./store.js";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <StateProvider>
+    <BrowserRouter>
       <App />
-    </StateProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

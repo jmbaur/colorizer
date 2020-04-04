@@ -23,12 +23,18 @@ const Landing = props => {
       data: { name, newRoom: selected === "newRoom", room },
       withCredentials: true
     }).then(res => {
-      props.socket.emit("join", res.data);
+      // JOIN #2
+      console.log("JOIN #2", res.data);
+      // props.socket.emit("join", res.data);
       dispatch({ type: "all", payload: res.data });
     });
     resetName();
     resetRoom();
     setSelected("newRoom");
+
+    // go to "/draw" route
+    console.log(props)
+    props.history.push("/draw");
   };
 
   return (
@@ -59,7 +65,6 @@ const Landing = props => {
           {selected === "existingRoom" ? (
             <input type="text" placeholder="Enter room name" {...bindRoom} />
           ) : null}
-
         </div>
         <button className="Btn" type="submit">
           Start drawing!

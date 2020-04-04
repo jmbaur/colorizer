@@ -7,9 +7,4 @@ const UserSchema = mongoose.Schema({
   thickness: Number
 });
 
-const RoomSchema = mongoose.Schema({
-  room: String,
-  users: [UserSchema]
-});
-
-module.exports = mongoose.model("Rooms", RoomSchema);
+module.exports = mongoose.model("Users", UserSchema);
