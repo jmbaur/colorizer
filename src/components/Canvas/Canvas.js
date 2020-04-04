@@ -1,8 +1,12 @@
 import React from "react";
 import { store } from "../../store.js";
+import { socketInst } from "../../socket.js";
 
 const Canvas = props => {
-  props.socket.on("draw", data => {
+  const { state } = React.useContext(store);
+  const socket = React.useContext(socketInst);
+
+  socket.on("draw", data => {
     setData(data);
   });
 
@@ -11,7 +15,6 @@ const Canvas = props => {
   const [pos, setPos] = React.useState(null);
   const [data, setData] = React.useState(null);
   const [line, setLine] = React.useState([]);
-  const { state } = React.useContext(store);
 
   const getCanvas = () => {
     return {
@@ -73,21 +76,19 @@ const Canvas = props => {
     props.clearCanvas(false);
   }, [props]);
 
-
   React.useEffect(() => {
-    if(!props.download) return;
-    const {canvas} = getCanvas()
-    const dataURL = canvas.toDataURL()
-    const openInNewPage = window.open('about:blank', 'my drawing!');
+    if (!props.download) return;
+    const { canvas } = getCanvas();
+    const dataURL = canvas.toDataURL();
+    const openInNewPage = window.open("about:blank", "my drawing!");
     openInNewPage.document.write(`<img src='${dataURL}' alt='from canvas'/>`);
-    console.log('hit', dataURL)
-    props.handleDownload(false)
-  },[props])
-
+    console.log("hit", dataURL);
+    props.handleDownload(false);
+  }, [props]);
 
   return (
-  
-    <canvas id='canvasDrawing'
+    <canvas
+      id="canvasDrawing"
       ref={canvasRef}
       width={window.innerWidth}
       height={window.innerHeight}
@@ -104,7 +105,7 @@ const Canvas = props => {
         // const rect = canvas.getBoundingClientRect();
         setPos({ x: e.clientX, y: e.clientY });
         setLine(line => [...line, pos]);
-        props.socket.emit("draw", {
+        socket.emit("draw", {
           room: state.room,
           data: {
             x0: pos.x / window.innerWidth,

@@ -7,8 +7,8 @@ import Room from "../Room/Room.js";
 import "./Toolbar.css";
 
 const Toolbar = props => {
+  console.log("PROPS", props);
   const socket = React.useContext(socketInst);
-  console.log("SOCKET", socket);
   const { state, dispatch } = React.useContext(store);
 
   socket.on("room", data => {
@@ -65,6 +65,7 @@ const Toolbar = props => {
           onClick={() => {
             socket.emit("leave", state);
             dispatch({ type: "room", payload: "" });
+            props.history.push("/");
           }}
         >
           Leave Room

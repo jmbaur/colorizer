@@ -1,10 +1,8 @@
 import React from "react";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
-// import { store } from "../../store.js";
 
 const Container = props => {
-  // const { state } = React.useContext(store);
   const [clear, setClear] = React.useState(false);
   const [download, setDownload] = React.useState(false);
 
@@ -14,8 +12,8 @@ const Container = props => {
   };
 
   const handleDownload = bool => {
-    setDownload(bool)
-  }
+    setDownload(bool);
+  };
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
     ctx.beginPath();
@@ -30,9 +28,8 @@ const Container = props => {
 
   return (
     <div className="container">
-      <Toolbar socket={props.socket} clearCanvas={clearCanvas} handleDownload={handleDownload} />
+      <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
       <Canvas
-        socket={props.socket}
         draw={draw}
         clear={clear}
         clearCanvas={clearCanvas}

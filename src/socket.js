@@ -1,8 +1,7 @@
 import React from "react";
-import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
 
-const socket = socketIOClient("http://localhost:8000/");
-console.log("SOOOOOOOCKET", socket);
+const socket = io("http://localhost:8000/");
 
 const socketInst = React.createContext(socket);
 const { Provider } = socketInst;

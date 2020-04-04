@@ -8,23 +8,6 @@ import "./reset.css";
 import "./App.css";
 
 function App() {
-  // const { dispatch } = React.useContext(store);
-
-  // React.useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: "http://localhost:8000/api/getUser",
-  //     withCredentials: true
-  //   }).then(res => {
-  //     dispatch({ type: "all", payload: res.data });
-  //     if (res.data.room) {
-  //       // JOIN #1
-  //       console.log("JOIN #1", res.data);
-  //       socket.emit("join", res.data);
-  //     }
-  //   });
-  // }, [dispatch]);
-
   return (
     <div className="App">
       <SocketProvider>

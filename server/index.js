@@ -18,8 +18,10 @@ const {
 const app = express();
 
 // connect to DB
-mongoose.connect(process.env.CONN_STR, { useUnifiedTopology: true }, () =>
-  console.log("connected to DB")
+mongoose.connect(
+  process.env.CONN_STR,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => console.log("connected to DB")
 );
 
 // middlewares
