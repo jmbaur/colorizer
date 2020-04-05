@@ -7,12 +7,17 @@ const socket = require("socket.io");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const { init, setUser, getUser } = require("./controllers/session.js");
 const {
-  addToRoom,
+  setUser,
+  changeUser,
+  getUser,
+  removeUser
+} = require("./controllers/session.js");
+const {
+  addUser,
   removeFromRoom,
   getRoomUsers,
-  modifyUserInRoom
+  getRoom
 } = require("./controllers/socket.js");
 
 const app = express();
@@ -38,56 +43,51 @@ app.use(
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     sameSite: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 }
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
   })
 );
 
-const port = process.env.SERVER_PORT || 8080;
-const server = app.listen(port, () => console.log(`Listening on port ${port}`));
+const PORT = process.env.SERVER_PORT || 8080;
+const server = app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
 
 // endpoints
-app.post("/api/init", init);
-app.put("/api/setUser", setUser);
-app.get("/api/getUser", getUser);
+app.post("/api/user", setUser);
+app.get("/api/user", getUser);
+app.put("/api/user", changeUser);
+app.delete("/api/user", removeUser);
+
+app.get("/api/room", getRoom);
 
 const io = socket(server);
 
-const sendRoom = room => {
-  io.to(room).emit("room", {
-    room: room,
-    users: getRoomUsers(room)
-  });
-  console.log("ROOM", getRoomUsers(room));
-};
+// const sendRoom = room => {
+//   io.to(room).emit("room", {
+//     room: room,
+//     users: getRoomUsers(room)
+//   });
+// };
 
 io.on("connection", socket => {
   socket.on("hi", () => socket.emit("hi", "hi"));
 
   socket.on("join", user => {
     socket.join(user.room);
-    addToRoom(user);
-
-    // send users and room info
-    sendRoom(user.room);
+    socket.broadcast.to(user.room).emit("room", { type: "addUser" });
   });
 
   // listen for user changes
   socket.on("change", user => {
-    addToRoom(user);
-    sendRoom(user.room);
-  });
-
-  // listen for request for all users in room
-  socket.on("room", user => {
-    sendRoom(user.room);
+    // addUser(user);
+    // sendRoom(user.room);
   });
 
   // listen for leave message
   socket.on("leave", user => {
-    removeFromRoom(user);
     socket.leave(user.room);
-    sendRoom(user.room);
+    socket.broadcast.to(user.room).emit("room", { type: "removeUser" });
   });
 
   // listen for drawing message

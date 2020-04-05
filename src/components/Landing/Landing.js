@@ -15,27 +15,30 @@ const Landing = props => {
     setSelected(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    axios({
+    const res = await axios({
       method: "post",
-      url: "http://localhost:8000/api/init",
+      url: "http://localhost:8000/api/user",
       data: { name, newRoom: selected === "newRoom", room },
       withCredentials: true
-    }).then(res => {
-      // JOIN #2
-      console.log("JOIN #2", res.data);
-      // props.socket.emit("join", res.data);
-      dispatch({ type: "all", payload: res.data });
     });
+    dispatch({ type: "all", payload: res.data });
     resetName();
     resetRoom();
     setSelected("newRoom");
 
-    // go to "/draw" route
-    console.log(props)
     props.history.push("/draw");
   };
+
+  // get existing session
+  // React.useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     url: "http://localhost:8000/api/user",
+  //     withCredentials: true
+  //   }).then(res => dispatch({ type: "all", payload: res.data }));
+  // }, [dispatch]);
 
   return (
     <div className="landingPage">

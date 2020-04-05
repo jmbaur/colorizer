@@ -2,17 +2,17 @@ import React from "react";
 import axios from "axios";
 
 const initialState = {
+  id: undefined,
   color: "#000000",
   thickness: "3",
-  name: "",
-  room: ""
+  name: undefined,
+  room: undefined
 };
 
 const store = React.createContext(initialState);
 const { Provider } = store;
 
 const StateProvider = ({ children }) => {
-
   const [state, dispatch] = React.useReducer((state, action) => {
     switch (action.type) {
       case "all":
@@ -20,7 +20,7 @@ const StateProvider = ({ children }) => {
       case "color":
         axios({
           method: "put",
-          url: "http://localhost:8000/api/setUser",
+          url: "http://localhost:8000/api/user",
           data: { [action.type]: action.payload },
           withCredentials: true
         });
@@ -28,7 +28,7 @@ const StateProvider = ({ children }) => {
       case "thickness":
         axios({
           method: "put",
-          url: "http://localhost:8000/api/setUser",
+          url: "http://localhost:8000/api/user",
           data: { [action.type]: action.payload },
           withCredentials: true
         });
@@ -36,15 +36,13 @@ const StateProvider = ({ children }) => {
       case "room":
         axios({
           method: "put",
-          url: "http://localhost:8000/api/setUser",
+          url: "http://localhost:8000/api/user",
           data: { [action.type]: action.payload },
           withCredentials: true
         });
         return { ...state, room: action.payload };
       case "name":
         return { ...state, name: action.payload };
-      case "members":
-        return { ...state, members: action.payload };
       default:
         throw new Error();
     }

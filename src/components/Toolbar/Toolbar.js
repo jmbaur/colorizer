@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 import { socketInst } from "../../socket.js";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
@@ -7,13 +8,25 @@ import Room from "../Room/Room.js";
 import "./Toolbar.css";
 
 const Toolbar = props => {
-  console.log("PROPS", props);
   const socket = React.useContext(socketInst);
   const { state, dispatch } = React.useContext(store);
 
+  const getRoom = () => {
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/room?room=${state.room}`,
+      withCredentials: true
+    }).then(res => setRoom(res.data));
+  };
+
   socket.on("room", data => {
-    const index = room.findIndex(el => el.id === data.id);
-    setRoom(data.users);
+    getRoom();
+    // switch (data.type) {
+    //   case "newUser":
+    //     getRoom();
+    //   default:
+    //     throw new Error();
+    // }
   });
 
   const [name, bindName] = useInput(state.name);
@@ -37,8 +50,12 @@ const Toolbar = props => {
   };
 
   React.useEffect(() => {
-    socket.emit("change", state);
-  }, [state, socket]);
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/room?room=${state.room}`,
+      withCredentials: true
+    }).then(res => setRoom(res.data));
+  }, [state]);
 
   return (
     <section className="toolbar">
@@ -64,7 +81,12 @@ const Toolbar = props => {
           className="Btn"
           onClick={() => {
             socket.emit("leave", state);
-            dispatch({ type: "room", payload: "" });
+            axios({
+              method: "delete",
+              url: "http://localhost:8000/api/user",
+              data: { user: state },
+              withCredentials: true
+            });
             props.history.push("/");
           }}
         >
@@ -74,7 +96,6 @@ const Toolbar = props => {
 
       <div className="usersWhoJoin">
         <label>Online</label>
-
         <Room room={room} />
       </div>
 
@@ -120,4 +141,4 @@ const Toolbar = props => {
   );
 };
 
-export default Toolbar;
+export default withRouter(Toolbar);
