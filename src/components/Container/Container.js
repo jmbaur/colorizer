@@ -23,14 +23,15 @@ const Container = props => {
   };
 
   const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x1, y1);
     ctx.lineCap = "round";
     ctx.strokeStyle = colorParam;
     ctx.lineWidth = thicknessParam;
-    ctx.stroke();
+    // draw line
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
     ctx.closePath();
+    ctx.stroke();
   };
 
   useMountEffect(() => {
@@ -38,7 +39,6 @@ const Container = props => {
       socket.emit("join", state);
       return;
     }
-
     axios({
       method: "get",
       url: "http://localhost:8000/api/user",
@@ -49,6 +49,7 @@ const Container = props => {
     });
   });
 
+  // Protected
   // useMountEffect(() => {
   //   if (!state.room) props.history.push("/");
   // });

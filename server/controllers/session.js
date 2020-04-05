@@ -32,15 +32,30 @@ module.exports = {
     res.status(200).send(req.session.user);
   },
   changeUser: async (req, res) => {
-    // change the user session
-    if (req.body.name) req.session.user.name = req.body.name;
-    if (req.body.color) req.session.user.color = req.body.color;
-    if (req.body.thickness) req.session.user.thickness = req.body.thickness;
-    if (!req.body.room) req.session.user.room = undefined;
+    const { name, color, thickness, room } = req.body;
+    // find user in DB by ID (unique)
+    const user = await User.findOne({ id: req.session.user.id });
 
-    // change the user in the database
-    const { id, name, color, thickness, room } = req.session.user;
-    const newUser = new User({ id, name, color, thickness, room });
+    // change the user session
+    if (name) {
+      req.session.user.name = name;
+      user.name = name;
+    }
+    if (color) {
+      req.session.user.color = color;
+      user.color = color;
+    }
+    if (thickness) {
+      req.session.user.thickness = req.body.thickness;
+      user.thickness = thickness;
+    }
+    if (!room) {
+      req.session.user.room = undefined;
+      user.room = undefined;
+    }
+
+    // save user back into DB
+    await user.save();
 
     // send user session back
     res.status(200).send(req.session.user);

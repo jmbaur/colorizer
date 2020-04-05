@@ -71,7 +71,7 @@ const Canvas = props => {
   React.useEffect(() => {
     if (!props.clear) return;
     const { ctx, canvas } = getCanvas();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width + 1, canvas.height + 1);
     localStorage.clear();
     props.clearCanvas(false);
   }, [props]);

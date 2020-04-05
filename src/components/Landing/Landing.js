@@ -2,14 +2,16 @@ import React from "react";
 import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
+import ExistingSession from "../ExistingSession/ExistingSession.js";
 import "./Landing.css";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
 
-  const [name, bindName, resetName] = useInput(state.name || "");
+  const [name, bindName, resetName] = useInput(state.name);
   const [room, bindRoom, resetRoom] = useInput("");
   const [selected, setSelected] = React.useState("newRoom");
+  const [existing, setExisting] = React.useState(false);
 
   const handleChange = e => {
     setSelected(e.target.value);
@@ -32,13 +34,17 @@ const Landing = props => {
   };
 
   // get existing session
-  // React.useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     url: "http://localhost:8000/api/user",
-  //     withCredentials: true
-  //   }).then(res => dispatch({ type: "all", payload: res.data }));
-  // }, [dispatch]);
+  React.useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:8000/api/user",
+      withCredentials: true
+    }).then(res => {
+      if (!res.data.name) return;
+      setExisting(true);
+      dispatch({ type: "all", payload: res.data });
+    });
+  }, [dispatch]);
 
   return (
     <div className="landingPage">
@@ -46,29 +52,33 @@ const Landing = props => {
         <label>Name</label>
 
         <input type="text" {...bindName} />
-        <div className="loginInnerC">
-          <div>
-            <label>New Room</label>
-            <input
-              type="radio"
-              value="newRoom"
-              onChange={handleChange}
-              checked={selected === "newRoom"}
-            />
+        {!existing ? (
+          <div className="loginInnerC">
+            <div>
+              <label>New Room</label>
+              <input
+                type="radio"
+                value="newRoom"
+                onChange={handleChange}
+                checked={selected === "newRoom"}
+              />
+            </div>
+            <div>
+              <label>Existing Room</label>
+              <input
+                type="radio"
+                value="existingRoom"
+                onChange={handleChange}
+                checked={selected === "existingRoom"}
+              />
+            </div>
+            {selected === "existingRoom" ? (
+              <input type="text" placeholder="Enter room name" {...bindRoom} />
+            ) : null}
           </div>
-          <div>
-            <label>Existing Room</label>
-            <input
-              type="radio"
-              value="existingRoom"
-              onChange={handleChange}
-              checked={selected === "existingRoom"}
-            />
-          </div>
-          {selected === "existingRoom" ? (
-            <input type="text" placeholder="Enter room name" {...bindRoom} />
-          ) : null}
-        </div>
+        ) : (
+          <ExistingSession user={state} cancel={() => setExisting(false)} />
+        )}
         <button className="Btn" type="submit">
           Start drawing!
         </button>

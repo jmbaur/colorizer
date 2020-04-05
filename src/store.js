@@ -5,8 +5,8 @@ const initialState = {
   id: undefined,
   color: "#000000",
   thickness: "3",
-  name: undefined,
-  room: undefined
+  name: "",
+  room: ""
 };
 
 const store = React.createContext(initialState);

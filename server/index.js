@@ -63,16 +63,10 @@ app.get("/api/room", getRoom);
 
 const io = socket(server);
 
-// const sendRoom = room => {
-//   io.to(room).emit("room", {
-//     room: room,
-//     users: getRoomUsers(room)
-//   });
-// };
-
 io.on("connection", socket => {
   socket.on("hi", () => socket.emit("hi", "hi"));
 
+  // listen for new users joining room
   socket.on("join", user => {
     socket.join(user.room);
     socket.broadcast.to(user.room).emit("room", { type: "addUser" });
@@ -80,11 +74,10 @@ io.on("connection", socket => {
 
   // listen for user changes
   socket.on("change", user => {
-    // addUser(user);
-    // sendRoom(user.room);
+    socket.broadcast.to(user.room).emit("room", { type: "changedUser" });
   });
 
-  // listen for leave message
+  // listen for user leaving room
   socket.on("leave", user => {
     socket.leave(user.room);
     socket.broadcast.to(user.room).emit("room", { type: "removeUser" });

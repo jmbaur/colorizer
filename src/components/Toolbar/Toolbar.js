@@ -40,7 +40,7 @@ const Toolbar = props => {
   const handleSubmit = e => {
     axios({
       method: "put",
-      url: "http://localhost:8000/api/setUser",
+      url: "http://localhost:8000/api/user",
       data: { name },
       withCredentials: true
     });
