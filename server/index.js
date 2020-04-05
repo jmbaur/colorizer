@@ -25,7 +25,7 @@ const app = express();
 // connect to DB
 mongoose.connect(
   process.env.CONN_STR,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
   () => console.log("connected to DB")
 );
 
