@@ -1,5 +1,5 @@
 import React from "react";
-import './Room.css';
+import './Room.scss';
 
 
 const Room = props => {

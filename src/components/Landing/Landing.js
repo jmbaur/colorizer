@@ -3,7 +3,7 @@ import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 import ExistingSession from "../ExistingSession/ExistingSession.js";
-import "./Landing.css";
+import "./Landing.scss";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
@@ -18,7 +18,7 @@ const Landing = props => {
   };
 
   const handleSubmit = async e => {
-    console.log('landing', props)
+    // console.log('landing', props)
     e.preventDefault();
     const res = await axios({
       method: "post",
@@ -52,7 +52,7 @@ const Landing = props => {
       <form className="loginForm" onSubmit={handleSubmit}>
         <label>Name</label>
 
-        <input type="text" {...bindName} />
+        <input type="text" autofocus {...bindName} />
         {!existing ? (
           <div className="loginInnerC">
             <div>

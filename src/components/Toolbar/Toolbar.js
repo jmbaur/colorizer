@@ -5,7 +5,7 @@ import { socketInst } from "../../socket.js";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
 import Room from "../Room/Room.js";
-import "./Toolbar.css";
+import "./Toolbar.scss";
 
 const Toolbar = props => {
   const socket = React.useContext(socketInst);

@@ -4,8 +4,8 @@ import { SocketProvider } from "./socket.js";
 import { StateProvider } from "./store.js";
 import Container from "./components/Container/Container.js";
 import Landing from "./components/Landing/Landing.js";
-import "./reset.css";
-import "./App.css";
+import "./style/reset.scss";
+import "./style/App.scss";
 
 function App() {
   return (
