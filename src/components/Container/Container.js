@@ -34,6 +34,15 @@ const Container = props => {
     ctx.stroke();
   };
 
+  const saveLine = line => {
+    axios({
+      method: "post",
+      url: "http://localhost:8000/api/line",
+      data: { id: state.id, name: state.name, room: state.room, line },
+      withCredentials: true
+    });
+  };
+
   useMountEffect(() => {
     if (state.room) {
       socket.emit("join", state);
