@@ -26,30 +26,65 @@ const Canvas = props => {
   const reset = () => {
     if (!drawing) return;
 
-    const storage = JSON.parse(localStorage.getItem("drawing"));
-    if (storage) {
-      localStorage.setItem(
-        "drawing",
-        JSON.stringify({
-          lines: [...storage.lines, line],
-          width: window.innerWidth,
-          height: window.innerHeight
-        })
-      );
-    } else {
-      localStorage.setItem(
-        "drawing",
-        JSON.stringify({
-          lines: [line],
-          width: window.innerWidth,
-          height: window.innerHeight
-        })
-      );
-    }
+    // const storage = JSON.parse(localStorage.getItem("drawing"));
+    // if (storage) {
+    //   localStorage.setItem(
+    //     "drawing",
+    //     JSON.stringify({
+    //       lines: [...storage.lines, line],
+    //       width: window.innerWidth,
+    //       height: window.innerHeight
+    //     })
+    //   );
+    // } else {
+    //   localStorage.setItem(
+    //     "drawing",
+    //     JSON.stringify({
+    //       lines: [line],
+    //       width: window.innerWidth,
+    //       height: window.innerHeight
+    //     })
+    //   );
+    // }
 
     setPos(null);
+    props.saveLine(line);
     setLine([]);
     setDrawing(false);
+  };
+
+  const startDrawing = e => {
+    setPos({ x: e.clientX, y: e.clientY });
+    setDrawing(true);
+  };
+
+  const moveMouse = e => {
+    if (!drawing) return;
+    const { ctx } = getCanvas();
+    // needed if there is a misalignment
+    // const rect = canvas.getBoundingClientRect();
+    setPos({ x: e.clientX, y: e.clientY });
+    setLine(line => [...line, pos]);
+    socket.emit("draw", {
+      room: state.room,
+      data: {
+        x0: pos.x / window.innerWidth,
+        y0: pos.y / window.innerHeight,
+        x1: e.clientX / window.innerWidth,
+        y1: e.clientY / window.innerHeight,
+        color: state.color,
+        thickness: state.thickness
+      }
+    });
+    props.draw(
+      ctx,
+      pos.x,
+      pos.y,
+      e.clientX,
+      e.clientY,
+      state.color,
+      state.thickness
+    );
   };
 
   // draw lines from other users
@@ -76,6 +111,7 @@ const Canvas = props => {
     props.clearCanvas(false);
   }, [props]);
 
+  // download the canvas to png
   React.useEffect(() => {
     if (!props.download) return;
     const { canvas } = getCanvas();
@@ -84,9 +120,12 @@ const Canvas = props => {
     a.href = dataURL;
     a.download = "art.png";
     a.click();
-    // const w = window.open("about:blank", "Art");
-    // w.document.write(`<img src="${dataURL}" alt="art"/>`);
     props.handleDownload(false);
+  }, [props]);
+
+  React.useEffect(() => {
+    if (!props.prevLines.length) return;
+    console.log("prev lines", props.prevLines);
   }, [props]);
 
   return (
@@ -95,40 +134,10 @@ const Canvas = props => {
       ref={canvasRef}
       width={window.innerWidth}
       height={window.innerHeight}
-      onMouseDown={e => {
-        setPos({ x: e.clientX, y: e.clientY });
-        setDrawing(true);
-      }}
+      onMouseDown={startDrawing}
       onMouseUp={reset}
       onMouseOut={reset}
-      onMouseMove={e => {
-        if (!drawing) return;
-        const { ctx } = getCanvas();
-        // needed if there is a misalignment
-        // const rect = canvas.getBoundingClientRect();
-        setPos({ x: e.clientX, y: e.clientY });
-        setLine(line => [...line, pos]);
-        socket.emit("draw", {
-          room: state.room,
-          data: {
-            x0: pos.x / window.innerWidth,
-            y0: pos.y / window.innerHeight,
-            x1: e.clientX / window.innerWidth,
-            y1: e.clientY / window.innerHeight,
-            color: state.color,
-            thickness: state.thickness
-          }
-        });
-        props.draw(
-          ctx,
-          pos.x,
-          pos.y,
-          e.clientX,
-          e.clientY,
-          state.color,
-          state.thickness
-        );
-      }}
+      onMouseMove={moveMouse}
     />
   );
 };

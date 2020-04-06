@@ -12,6 +12,7 @@ const Container = props => {
 
   const [clear, setClear] = React.useState(false);
   const [download, setDownload] = React.useState(false);
+  const [prevLines, setPrevLines] = React.useState([]);
 
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
@@ -38,8 +39,24 @@ const Container = props => {
     axios({
       method: "post",
       url: "http://localhost:8000/api/line",
-      data: { id: state.id, name: state.name, room: state.room, line },
+      data: {
+        id: state.id,
+        name: state.name,
+        room: state.room,
+        line: { color: state.color, thickness: state.thickness, points: line }
+      },
       withCredentials: true
+    });
+  };
+
+  const getPrevLines = room => {
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/lines?room=${room}`,
+      withCredentials: true
+    }).then(res => {
+      // console.log("previous lines", res.data);
+      setPrevLines(res.data);
     });
   };
 
@@ -53,15 +70,11 @@ const Container = props => {
       url: "http://localhost:8000/api/user",
       withCredentials: true
     }).then(res => {
-      dispatch({ type: "all", payload: res.data });
-      socket.emit("join", res.data);
+      dispatch({ type: "all", payload: res.data }); // set global state
+      socket.emit("join", res.data); // emit to room of a new user
+      getPrevLines(res.data.room); // get previous lines in the room
     });
   });
-
-  // Protected
-  // useMountEffect(() => {
-  //   if (!state.room) props.history.push("/");
-  // });
 
   return (
     <div className="container">
@@ -72,6 +85,8 @@ const Container = props => {
         clearCanvas={clearCanvas}
         download={download}
         handleDownload={handleDownload}
+        saveLine={saveLine}
+        prevLines={prevLines}
       />
     </div>
   );

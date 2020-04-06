@@ -5,16 +5,16 @@ const LineSchema = mongoose.Schema({
   name: String,
   room: String,
   lines: [
-    [
-      {
-        x0: Number,
-        y0: Number,
-        x1: Number,
-        y1: Number,
-        color: String,
-        thickness: Number
-      }
-    ]
+    {
+      points: [
+        {
+          x: Number,
+          y: Number
+        }
+      ],
+      color: String,
+      thickness: Number
+    }
   ]
 });
 

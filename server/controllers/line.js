@@ -24,7 +24,7 @@ module.exports = {
     res.sendStatus(200);
   },
   getLines: async (req, res) => {
-    const roomLines = await Lines.find({ room: req.body.room });
-    console.log("all line collections in this room", roomLines);
+    const roomLines = await Lines.find({ room: req.query.room });
+    res.status(200).send(roomLines);
   }
 };
