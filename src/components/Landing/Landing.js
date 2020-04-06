@@ -18,6 +18,7 @@ const Landing = props => {
   };
 
   const handleSubmit = async e => {
+    console.log('landing', props)
     e.preventDefault();
     const res = await axios({
       method: "post",
