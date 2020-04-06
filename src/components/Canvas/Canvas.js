@@ -79,10 +79,13 @@ const Canvas = props => {
   React.useEffect(() => {
     if (!props.download) return;
     const { canvas } = getCanvas();
-    const dataURL = canvas.toDataURL();
-    const openInNewPage = window.open("about:blank", "my drawing!");
-    openInNewPage.document.write(`<img src='${dataURL}' alt='from canvas'/>`);
-    console.log("hit", dataURL);
+    const dataURL = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = dataURL;
+    a.download = "art.png";
+    a.click();
+    // const w = window.open("about:blank", "Art");
+    // w.document.write(`<img src="${dataURL}" alt="art"/>`);
     props.handleDownload(false);
   }, [props]);
 
