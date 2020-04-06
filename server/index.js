@@ -13,12 +13,8 @@ const {
   getUser,
   removeUser
 } = require("./controllers/session.js");
-const {
-  addUser,
-  removeFromRoom,
-  getRoomUsers,
-  getRoom
-} = require("./controllers/socket.js");
+const { getRoom } = require("./controllers/socket.js");
+const { addLine } = require("./controllers/line.js");
 
 const app = express();
 
@@ -58,8 +54,8 @@ app.post("/api/user", setUser);
 app.get("/api/user", getUser);
 app.put("/api/user", changeUser);
 app.delete("/api/user", removeUser);
-
 app.get("/api/room", getRoom);
+app.post("/api/line", addLine);
 
 const io = socket(server);
 

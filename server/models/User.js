@@ -8,4 +8,4 @@ const UserSchema = mongoose.Schema({
   thickness: Number
 });
 
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("users", UserSchema);
