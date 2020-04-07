@@ -103,7 +103,7 @@ const Container = props => {
       ) : (
         <Loading message="Loading previously drawn lines" />
       )}
-    </div>
+    </section>
 
   );
 };
