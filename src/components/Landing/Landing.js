@@ -4,6 +4,7 @@ import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 import ExistingSession from "../ExistingSession/ExistingSession.js";
 import "./Landing.scss";
+import color from '../../images/color.svg';
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
@@ -48,33 +49,34 @@ const Landing = props => {
   }, [dispatch]);
 
   return (
-    <div className="landingPage">
+    <section className="landingPage">
+      {/* <img id='logocolor' src={color}/> */}
       <form className="loginForm" onSubmit={handleSubmit}>
-        <label>Name</label>
-
-        <input type="text" autofocus {...bindName} />
+        <label className='username main'>Name</label>
+        <input className='name' type="text" autofocus {...bindName} />
         {!existing ? (
-          <div className="loginInnerC">
-            <div>
-              <label>New Room</label>
-              <input
+          <div className="loginInfo">
+          
+              <label className='main'>New Room</label>
+              <input 
                 type="radio"
                 value="newRoom"
                 onChange={handleChange}
                 checked={selected === "newRoom"}
-              />
-            </div>
-            <div>
-              <label>Existing Room</label>
+              />      
+          
+             <label className='main'>Existing Room</label>
               <input
                 type="radio"
                 value="existingRoom"
                 onChange={handleChange}
                 checked={selected === "existingRoom"}
               />
-            </div>
+         
             {selected === "existingRoom" ? (
-              <input type="text" placeholder="Enter room name" {...bindRoom} />
+              <div id='roomName'>
+              <input className='name' type="text" placeholder="Enter room name" {...bindRoom} />
+              </div>
             ) : null}
           </div>
         ) : (
@@ -84,7 +86,7 @@ const Landing = props => {
           Start drawing!
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 
