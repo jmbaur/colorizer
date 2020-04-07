@@ -1,4 +1,4 @@
-const User = require("../models/User.js");
+const Users = require("../models/User.js");
 const hri = require("human-readable-ids").hri;
 const randColor = require("../utils/randColor.js");
 
@@ -19,13 +19,14 @@ module.exports = {
 
     // add user to database if does not exist, change user if does exist
     const { id, name, color, thickness, room } = req.session.user;
-    const newUser = new User({ id, name, color, thickness, room });
 
-    const status = await User.deleteOne({ id: id });
-    if (!status.deletedCount) {
+    const existingUser = await Users.findOne({ id: id });
+    if (!existingUser) {
+      const newUser = new Users({ id, name, color, thickness, room });
       newUser.save();
     } else {
-      newUser.save();
+      existingUser = req.session.user;
+      existingUser.save();
     }
 
     // send user session back
@@ -34,7 +35,7 @@ module.exports = {
   changeUser: async (req, res) => {
     const { name, color, thickness, room } = req.body;
     // find user in DB by ID (unique)
-    const user = await User.findOne({ id: req.session.user.id });
+    const user = await Users.findOne({ id: req.session.user.id });
 
     // change the user session
     if (name) {
@@ -65,7 +66,7 @@ module.exports = {
     res.status(200).send(req.session.user);
   },
   removeUser: async (req, res) => {
-    const status = await User.deleteOne({ id: req.body.user.id });
+    const status = await Users.deleteOne({ id: req.body.user.id });
     if (status.deletedCount) {
       res.sendStatus(200);
     } else res.sendStatus(404);

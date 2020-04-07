@@ -2,6 +2,7 @@
 @import '../../style//variables//variables.scss';
 
 .landingPage {
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,6 +26,7 @@
 .main {
     font-family: $primaryFont;
     padding: 10px;
+
 }
 .name {
 @include loginInput;
@@ -32,12 +34,14 @@ font-family: $secondaryFont;
 font-size: $headings;
 }
 
+
 .loginInfo{
     padding: 25px;
 }
 
 .username, #roomName{
     padding: 10px;
+
 }
 
 // #logocolor {

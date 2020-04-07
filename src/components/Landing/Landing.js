@@ -52,8 +52,10 @@ const Landing = props => {
     <section className="landingPage">
       {/* <img id='logocolor' src={color}/> */}
       <form className="loginForm" onSubmit={handleSubmit}>
+
         <label className='username main'>Name</label>
         <input className='name' type="text" autofocus {...bindName} />
+
         {!existing ? (
           <div className="loginInfo">
           

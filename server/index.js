@@ -13,12 +13,8 @@ const {
   getUser,
   removeUser
 } = require("./controllers/session.js");
-const {
-  addUser,
-  removeFromRoom,
-  getRoomUsers,
-  getRoom
-} = require("./controllers/socket.js");
+const { getRoom } = require("./controllers/socket.js");
+const { addLine, getLines } = require("./controllers/line.js");
 
 const app = express();
 
@@ -44,7 +40,7 @@ app.use(
     resave: false,
     sameSite: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
   })
 );
 
@@ -58,7 +54,8 @@ app.post("/api/user", setUser);
 app.get("/api/user", getUser);
 app.put("/api/user", changeUser);
 app.delete("/api/user", removeUser);
-
+app.post("/api/line", addLine);
+app.get("/api/line", getLines);
 app.get("/api/room", getRoom);
 
 const io = socket(server);
