@@ -4,7 +4,7 @@ import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 import ExistingSession from "../ExistingSession/ExistingSession.js";
 import "./Landing.scss";
-import color from "../../images/color.svg";
+// import color from "../../images/color.svg";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
