@@ -25,6 +25,10 @@ module.exports = {
   },
   getLines: async (req, res) => {
     const roomLines = await Lines.find({ room: req.query.room });
-    res.status(200).send(roomLines);
+    let reducedRoomLines = [];
+    roomLines.forEach(collection => {
+      reducedRoomLines.push(...collection.lines);
+    });
+    res.status(200).send(reducedRoomLines);
   }
 };

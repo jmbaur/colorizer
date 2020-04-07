@@ -54,7 +54,10 @@ const Canvas = props => {
   };
 
   const startDrawing = e => {
-    setPos({ x: e.clientX, y: e.clientY });
+    setPos({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
     setDrawing(true);
   };
 
@@ -63,7 +66,10 @@ const Canvas = props => {
     const { ctx } = getCanvas();
     // needed if there is a misalignment
     // const rect = canvas.getBoundingClientRect();
-    setPos({ x: e.clientX, y: e.clientY });
+    setPos({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
     setLine(line => [...line, pos]);
     socket.emit("draw", {
       room: state.room,
@@ -78,10 +84,10 @@ const Canvas = props => {
     });
     props.draw(
       ctx,
-      pos.x,
-      pos.y,
-      e.clientX,
-      e.clientY,
+      pos.x * window.innerWidth,
+      pos.y * window.innerHeight,
+      e.clientX * window.innerWidth,
+      e.clientY * window.innerHeight,
       state.color,
       state.thickness
     );
@@ -107,7 +113,7 @@ const Canvas = props => {
     if (!props.clear) return;
     const { ctx, canvas } = getCanvas();
     ctx.clearRect(0, 0, canvas.width + 1, canvas.height + 1);
-    localStorage.clear();
+    // localStorage.clear();
     props.clearCanvas(false);
   }, [props]);
 
@@ -123,9 +129,30 @@ const Canvas = props => {
     props.handleDownload(false);
   }, [props]);
 
+  // draw previous lines in room
   React.useEffect(() => {
     if (!props.prevLines.length) return;
-    console.log("prev lines", props.prevLines);
+    const { ctx } = getCanvas();
+    for (let i = 0; i < props.prevLines.length; i++) {
+      for (let j = 0; j < props.prevLines[i].points.length - 1; j++) {
+        let { x: x0, y: y0 } = props.prevLines[i].points[j];
+        let { x: x1, y: y1 } = props.prevLines[i].points[j + 1];
+        let { color, thickness } = props.prevLines[i];
+        props.draw(
+          ctx,
+          // x0,
+          // y0,
+          // x1,
+          // y1,
+          x0 * window.innerWidth,
+          y0 * window.innerHeight,
+          x1 * window.innerWidth,
+          y1 * window.innerHeight,
+          color,
+          thickness
+        );
+      }
+    }
   }, [props]);
 
   return (

@@ -5,6 +5,7 @@ import { store } from "../../store.js";
 import useMountEffect from "../../hooks/useMountEffect.js";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
+import Loading from "../Loading/Loading.js";
 
 const Container = props => {
   const socket = React.useContext(socketInst);
@@ -13,6 +14,7 @@ const Container = props => {
   const [clear, setClear] = React.useState(false);
   const [download, setDownload] = React.useState(false);
   const [prevLines, setPrevLines] = React.useState([]);
+  const [loadPrevLines, setLoadPrevLines] = React.useState(false);
 
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
@@ -23,10 +25,10 @@ const Container = props => {
     setDownload(bool);
   };
 
-  const draw = (ctx, x0, y0, x1, y1, colorParam, thicknessParam) => {
+  const draw = (ctx, x0, y0, x1, y1, color, thickness) => {
     ctx.lineCap = "round";
-    ctx.strokeStyle = colorParam;
-    ctx.lineWidth = thicknessParam;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = thickness;
     // draw line
     ctx.beginPath();
     ctx.moveTo(x0, y0);
@@ -52,10 +54,9 @@ const Container = props => {
   const getPrevLines = room => {
     axios({
       method: "get",
-      url: `http://localhost:8000/api/lines?room=${room}`,
+      url: `http://localhost:8000/api/line?room=${room}`,
       withCredentials: true
     }).then(res => {
-      // console.log("previous lines", res.data);
       setPrevLines(res.data);
     });
   };
@@ -63,6 +64,7 @@ const Container = props => {
   useMountEffect(() => {
     if (state.room) {
       socket.emit("join", state);
+      getPrevLines(state.room); // get previous lines in the room
       return;
     }
     axios({
@@ -76,18 +78,27 @@ const Container = props => {
     });
   });
 
+  // see if user wants to load previous drawing
+  React.useEffect(() => {
+    if (!prevLines.length) return;
+  }, [prevLines]);
+
   return (
     <div className="container">
       <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
-      <Canvas
-        draw={draw}
-        clear={clear}
-        clearCanvas={clearCanvas}
-        download={download}
-        handleDownload={handleDownload}
-        saveLine={saveLine}
-        prevLines={prevLines}
-      />
+      {!loadPrevLines ? (
+        <Canvas
+          draw={draw}
+          clear={clear}
+          clearCanvas={clearCanvas}
+          download={download}
+          handleDownload={handleDownload}
+          saveLine={saveLine}
+          prevLines={prevLines}
+        />
+      ) : (
+        <Loading message="Loading previously drawn lines" />
+      )}
     </div>
   );
 };
