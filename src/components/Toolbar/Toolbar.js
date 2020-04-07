@@ -60,10 +60,11 @@ const Toolbar = props => {
   return (
     <section className="toolbar">
       <div className="userInfo">
-        <label>Username:</label>
+        <label className='labels'>Username:</label>
         {!changeName ? (
           <p onClick={() => setChangeName(true)}>{state.name}</p>
         ) : (
+          <div className='editName'>
           <input
             type="text"
             name="name"
@@ -72,13 +73,14 @@ const Toolbar = props => {
             onBlur={handleSubmit}
             autoFocus
           />
+          </div>
         )}
-        <br />
-        <label>Room</label>
+        
+        <label className='labels'>Room</label>
         <p>{state.room}</p>
-        <br />
+        </div>
         <button
-          className="Btn"
+          className="Btn right"
           onClick={() => {
             socket.emit("leave", state);
             axios({
@@ -92,17 +94,16 @@ const Toolbar = props => {
         >
           Leave Room
         </button>
-      </div>
 
       <div className="usersWhoJoin">
-        <label>Online</label>
+        <label className='labels'>Online</label>
         <Room room={room} />
       </div>
 
-      <div className="pickerInput">
-        <p>Pick a Color!</p>
-        <br />
+      <div className="colorContainer">
+        <label className='labels'>Pick a Color!</label>
         <input
+          className='colorPicker'
           type="color"
           name="color"
           value={state.color}
@@ -113,7 +114,7 @@ const Toolbar = props => {
       {/*SliderSection*/}
       <div className="sliderContainer">
         <input
-          className="sliderInput"
+          className="slider"
           name="thickness"
           value={state.thickness}
           onChange={handleChange}
@@ -127,13 +128,13 @@ const Toolbar = props => {
       <div className="buttons">
         <button className="Btn">Undo</button>
         &nbsp;
-        <button className="Btn" onClick={() => props.clearCanvas(true)}>
+        <button className="Btn clear" onClick={() => props.clearCanvas(true)}>
           Clear
         </button>
         <br />
-        <div className="export">
-          <button className="Btn" onClick={() => props.handleDownload(true)}>
-            Export Art
+        <div className="download">
+          <button className="Btn left" onClick={() => props.handleDownload(true)}>
+            Download Art
           </button>
         </div>
       </div>

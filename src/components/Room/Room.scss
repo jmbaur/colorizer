@@ -1,8 +1,17 @@
 
 .room {
-    width: 85px;
+    width: 110px;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
 }
 
+.stroke {
+    width: 10px;
+    margin-right: 5px;
+}
+
+.userName {
+    width:85px;
+    text-align: left;
+}

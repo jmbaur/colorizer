@@ -157,7 +157,6 @@ const Canvas = props => {
 
   return (
     <canvas
-      id="canvasDrawing"
       ref={canvasRef}
       width={window.innerWidth}
       height={window.innerHeight}

@@ -5,7 +5,11 @@ import { store } from "../../store.js";
 import useMountEffect from "../../hooks/useMountEffect.js";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
+
+import './Container.scss';
+
 import Loading from "../Loading/Loading.js";
+
 
 const Container = props => {
   const socket = React.useContext(socketInst);
@@ -84,7 +88,7 @@ const Container = props => {
   }, [prevLines]);
 
   return (
-    <div className="container">
+    <section className="container">
       <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
       {!loadPrevLines ? (
         <Canvas
@@ -100,6 +104,7 @@ const Container = props => {
         <Loading message="Loading previously drawn lines" />
       )}
     </div>
+
   );
 };
 

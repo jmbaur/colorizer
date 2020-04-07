@@ -1,3 +1,29 @@
+@import '../../style//mixin/mixin.scss';
+@import '../../style/variables/variables.scss';
+
 .ExistingSession {
-    padding: 20px;
+    padding: 25px;
+}
+
+
+
+#rejoin {
+   font-family: $primaryFont;
+   padding: 10px 0 20px 0;
+}
+
+#rejoin > span {
+   color: white;
+   font-size: $headings;
+}
+
+
+//Buttons
+.left{
+   @include left;
+
+}
+
+.right {
+   @include right;
 }
