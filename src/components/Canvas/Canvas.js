@@ -55,8 +55,8 @@ const Canvas = props => {
 
   const startDrawing = e => {
     setPos({
-      x: e.clientX / window.innerWidth,
-      y: e.clientY / window.innerHeight
+      x: e.clientX * window.innerWidth,
+      y: e.clientY * window.innerHeight
     });
     setDrawing(true);
   };
@@ -67,27 +67,27 @@ const Canvas = props => {
     // needed if there is a misalignment
     // const rect = canvas.getBoundingClientRect();
     setPos({
-      x: e.clientX / window.innerWidth,
-      y: e.clientY / window.innerHeight
+      x: e.clientX * window.innerWidth,
+      y: e.clientY * window.innerHeight
     });
     setLine(line => [...line, pos]);
     socket.emit("draw", {
       room: state.room,
       data: {
-        x0: pos.x / window.innerWidth,
-        y0: pos.y / window.innerHeight,
-        x1: e.clientX / window.innerWidth,
-        y1: e.clientY / window.innerHeight,
+        x0: pos.x,
+        y0: pos.y,
+        x1: e.clientX * window.innerWidth,
+        y1: e.clientY * window.innerHeight,
         color: state.color,
         thickness: state.thickness
       }
     });
     props.draw(
       ctx,
-      pos.x * window.innerWidth,
-      pos.y * window.innerHeight,
-      e.clientX * window.innerWidth,
-      e.clientY * window.innerHeight,
+      pos.x / window.innerWidth,
+      pos.y / window.innerHeight,
+      e.clientX,
+      e.clientY,
       state.color,
       state.thickness
     );
@@ -99,10 +99,10 @@ const Canvas = props => {
     const { ctx } = getCanvas();
     props.draw(
       ctx,
-      data.x0 * window.innerWidth,
-      data.y0 * window.innerHeight,
-      data.x1 * window.innerWidth,
-      data.y1 * window.innerHeight,
+      data.x0 / window.innerWidth,
+      data.y0 / window.innerHeight,
+      data.x1 / window.innerWidth,
+      data.y1 / window.innerHeight,
       data.color,
       data.thickness
     );
@@ -144,10 +144,10 @@ const Canvas = props => {
           // y0,
           // x1,
           // y1,
-          x0 * window.innerWidth,
-          y0 * window.innerHeight,
-          x1 * window.innerWidth,
-          y1 * window.innerHeight,
+          x0 / window.innerWidth,
+          y0 / window.innerHeight,
+          x1 / window.innerWidth,
+          y1 / window.innerHeight,
           color,
           thickness
         );
