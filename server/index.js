@@ -71,7 +71,6 @@ io.on("connection", socket => {
 
   // listen for user changes
   socket.on("change", user => {
-    console.log("Change", user);
     // socket.broadcast.to(user.room).emit("room", { type: "changedUser", data: user });
     // not broadcasting
     socket.to(user.room).emit("room", { type: "changedUser", data: user });
