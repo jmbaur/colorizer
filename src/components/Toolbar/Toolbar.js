@@ -20,13 +20,20 @@ const Toolbar = props => {
   };
 
   socket.on("room", data => {
-    getRoom();
-    // switch (data.type) {
-    //   case "newUser":
-    //     getRoom();
-    //   default:
-    //     throw new Error();
-    // }
+    console.log(data.type, typeof data.type);
+    switch (data.type) {
+      case "addUser":
+        getRoom();
+        break;
+      case "changedUser":
+        const index = room.findIndex(user => user.id === data.data.id);
+        let tmpRoom = room.slice();
+        tmpRoom.splice(index, 1, data.data);
+        setRoom(tmpRoom);
+        break;
+      default:
+        throw new Error();
+    }
   });
 
   const [name, bindName] = useInput(state.name);
@@ -35,6 +42,7 @@ const Toolbar = props => {
 
   const handleChange = e => {
     dispatch({ type: e.target.name, payload: e.target.value });
+    socket.emit("change", { ...state, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = e => {
@@ -60,50 +68,50 @@ const Toolbar = props => {
   return (
     <section className="toolbar">
       <div className="userInfo">
-        <label className='labels'>Username:</label>
+        <label className="labels">Username:</label>
         {!changeName ? (
           <p onClick={() => setChangeName(true)}>{state.name}</p>
         ) : (
-          <div className='editName'>
-          <input
-            type="text"
-            name="name"
-            placeholder="Change your name"
-            {...bindName}
-            onBlur={handleSubmit}
-            autoFocus
-          />
+          <div className="editName">
+            <input
+              type="text"
+              name="name"
+              placeholder="Change your name"
+              {...bindName}
+              onBlur={handleSubmit}
+              autoFocus
+            />
           </div>
         )}
-        
-        <label className='labels'>Room</label>
+
+        <label className="labels">Room</label>
         <p>{state.room}</p>
-        </div>
-        <button
-          className="Btn right"
-          onClick={() => {
-            socket.emit("leave", state);
-            axios({
-              method: "delete",
-              url: "http://localhost:8000/api/user",
-              data: { user: state },
-              withCredentials: true
-            });
-            props.history.push("/");
-          }}
-        >
-          Leave Room
-        </button>
+      </div>
+      <button
+        className="Btn right"
+        onClick={() => {
+          socket.emit("leave", state);
+          axios({
+            method: "delete",
+            url: "http://localhost:8000/api/user",
+            data: { user: state },
+            withCredentials: true
+          });
+          props.history.push("/");
+        }}
+      >
+        Leave Room
+      </button>
 
       <div className="usersWhoJoin">
-        <label className='labels'>Online</label>
+        <label className="labels">Online</label>
         <Room room={room} />
       </div>
 
       <div className="colorContainer">
-        <label className='labels'>Pick a Color!</label>
+        <label className="labels">Pick a Color!</label>
         <input
-          className='colorPicker'
+          className="colorPicker"
           type="color"
           name="color"
           value={state.color}
@@ -133,7 +141,10 @@ const Toolbar = props => {
         </button>
         <br />
         <div className="download">
-          <button className="Btn left" onClick={() => props.handleDownload(true)}>
+          <button
+            className="Btn left"
+            onClick={() => props.handleDownload(true)}
+          >
             Download Art
           </button>
         </div>

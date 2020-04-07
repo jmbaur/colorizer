@@ -54,7 +54,7 @@ const Landing = props => {
       <form className="loginForm" onSubmit={handleSubmit}>
 
         <label className='username main'>Name</label>
-        <input className='name' type="text" autofocus {...bindName} />
+        <input className='name' type="text" autoFocus {...bindName} />
 
         {!existing ? (
           <div className="loginInfo">
