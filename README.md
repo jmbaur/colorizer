@@ -30,8 +30,7 @@ Freezer:
      - index.js
      - hooks/
      - components/
-          - canvas.js
-	  - toolbar.js
+          - canvas.js - toolbar.js
 
 ## Back-End
 

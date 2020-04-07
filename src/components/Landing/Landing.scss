@@ -1,47 +1,46 @@
-@import '../../style/mixin/mixin.scss';
-@import '../../style//variables//variables.scss';
+@import "../../style/mixin/mixin.scss";
+@import "../../style//variables//variables.scss";
 
 .landingPage {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
-
-.loginForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 280px;
-    height: 330px;
-    font-size: 1.7rem;
-    // background-image: url('../../images/color.svg');
-    // background-repeat: no-repeat;
+.loginForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 280px;
+	height: 330px;
+	font-size: 1.7rem;
+	// background-image: url('../../images/color.svg');
+	// background-repeat: no-repeat;
 }
 
 .main {
-    font-family: $primaryFont;
-    padding: 10px;
-
+	font-family: $primaryFont;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 .name {
-@include loginInput;
-font-family: $secondaryFont;
-font-size: $headings;
+	@include loginInput;
+	font-family: $secondaryFont;
+	font-size: $headings;
 }
 
-
-.loginInfo{
-    padding: 25px;
+.loginInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 25px 0 25px 0;
 }
 
-.username, #roomName{
-    padding: 10px;
-
+.username,
+#roomName {
+	padding: 10px;
 }
 
 // #logocolor {

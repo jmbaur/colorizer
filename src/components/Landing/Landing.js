@@ -4,22 +4,22 @@ import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 import ExistingSession from "../ExistingSession/ExistingSession.js";
 import "./Landing.scss";
-import color from '../../images/color.svg';
+// import color from "../../images/color.svg";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
 
-  const [name, bindName, resetName] = useInput(state.name);
+  const [name, bindName, resetName] = useInput(state?.name);
   const [room, bindRoom, resetRoom] = useInput("");
   const [selected, setSelected] = React.useState("newRoom");
   const [existing, setExisting] = React.useState(false);
 
   const handleChange = e => {
+    console.log(e.target.value);
     setSelected(e.target.value);
   };
 
   const handleSubmit = async e => {
-    // console.log('landing', props)
     e.preventDefault();
     const res = await axios({
       method: "post",
@@ -52,32 +52,39 @@ const Landing = props => {
     <section className="landingPage">
       {/* <img id='logocolor' src={color}/> */}
       <form className="loginForm" onSubmit={handleSubmit}>
-
-        <label className='username main'>Name</label>
-        <input className='name' type="text" autofocus {...bindName} />
+        <label className="username main">Name</label>
+        <input className="name" type="text" autoFocus {...bindName} />
 
         {!existing ? (
           <div className="loginInfo">
-          
-              <label className='main'>New Room</label>
-              <input 
+            <label className="main">
+              New Room
+              <input
                 type="radio"
                 value="newRoom"
                 onChange={handleChange}
                 checked={selected === "newRoom"}
-              />      
-          
-             <label className='main'>Existing Room</label>
+              />
+            </label>
+
+            <label className="main">
+              Existing Room
               <input
                 type="radio"
                 value="existingRoom"
                 onChange={handleChange}
                 checked={selected === "existingRoom"}
               />
-         
+            </label>
+
             {selected === "existingRoom" ? (
-              <div id='roomName'>
-              <input className='name' type="text" placeholder="Enter room name" {...bindRoom} />
+              <div id="roomName">
+                <input
+                  className="name"
+                  type="text"
+                  placeholder="Enter room name"
+                  {...bindRoom}
+                />
               </div>
             ) : null}
           </div>

@@ -5,11 +5,7 @@ import { store } from "../../store.js";
 import useMountEffect from "../../hooks/useMountEffect.js";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
-
-import './Container.scss';
-
-import Loading from "../Loading/Loading.js";
-
+import "./Container.scss";
 
 const Container = props => {
   const socket = React.useContext(socketInst);
@@ -18,7 +14,6 @@ const Container = props => {
   const [clear, setClear] = React.useState(false);
   const [download, setDownload] = React.useState(false);
   const [prevLines, setPrevLines] = React.useState([]);
-  const [loadPrevLines, setLoadPrevLines] = React.useState(false);
 
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
@@ -90,21 +85,16 @@ const Container = props => {
   return (
     <section className="container">
       <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
-      {!loadPrevLines ? (
-        <Canvas
-          draw={draw}
-          clear={clear}
-          clearCanvas={clearCanvas}
-          download={download}
-          handleDownload={handleDownload}
-          saveLine={saveLine}
-          prevLines={prevLines}
-        />
-      ) : (
-        <Loading message="Loading previously drawn lines" />
-      )}
+      <Canvas
+        draw={draw}
+        clear={clear}
+        clearCanvas={clearCanvas}
+        download={download}
+        handleDownload={handleDownload}
+        saveLine={saveLine}
+        prevLines={prevLines}
+      />
     </section>
-
   );
 };
 
