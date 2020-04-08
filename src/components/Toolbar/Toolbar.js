@@ -72,8 +72,8 @@ const Toolbar = props => {
         {!changeName ? (
           <p onClick={() => setChangeName(true)}>{state.name}</p>
         ) : (
-          <div className="editName">
-            <input
+          <div data-testid="editnameCheck" >
+            <input 
               type="text"
               name="name"
               placeholder="Change your name"
