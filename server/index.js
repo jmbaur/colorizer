@@ -66,7 +66,9 @@ io.on("connection", socket => {
   // listen for new users joining room
   socket.on("join", user => {
     socket.join(user.room);
-    socket.broadcast.to(user.room).emit("room", { type: "addUser" });
+    socket.broadcast
+      .to(user.room)
+      .emit("room", { type: "addUser", data: { room: user.room } });
   });
 
   // listen for user changes

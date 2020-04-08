@@ -14,6 +14,7 @@ const Container = props => {
   const [clear, setClear] = React.useState(false);
   const [download, setDownload] = React.useState(false);
   const [prevLines, setPrevLines] = React.useState([]);
+  const [room, setRoom] = React.useState([]);
 
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
@@ -22,6 +23,14 @@ const Container = props => {
 
   const handleDownload = bool => {
     setDownload(bool);
+  };
+
+  const getRoom = reqRoom => {
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/room?room=${reqRoom}`,
+      withCredentials: true
+    }).then(res => setRoom(res.data));
   };
 
   const draw = (ctx, x0, y0, x1, y1, color, thickness) => {
@@ -63,9 +72,12 @@ const Container = props => {
   useMountEffect(() => {
     if (state.room) {
       socket.emit("join", state);
+      getRoom(state.room);
       getPrevLines(state.room); // get previous lines in the room
       return;
     }
+
+    let newRoom;
     axios({
       method: "get",
       url: "http://localhost:8000/api/user",
@@ -74,12 +86,19 @@ const Container = props => {
       dispatch({ type: "all", payload: res.data }); // set global state
       socket.emit("join", res.data); // emit to room of a new user
       getPrevLines(res.data.room); // get previous lines in the room
+      getRoom(res.data.room); // finds users in room
     });
   });
 
   return (
     <section className="container">
-      <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
+      <Toolbar
+        clearCanvas={clearCanvas}
+        handleDownload={handleDownload}
+        room={room}
+        setRoom={setRoom}
+        getRoom={getRoom}
+      />
       <Canvas
         draw={draw}
         clear={clear}
