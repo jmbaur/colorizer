@@ -75,17 +75,23 @@ io.on("connection", socket => {
   socket.on("change", user => {
     // socket.broadcast.to(user.room).emit("room", { type: "changedUser", data: user });
     // not broadcasting
-    socket.to(user.room).emit("room", { type: "changedUser", data: user });
+    io.sockets.to(user.room).emit("room", { type: "changedUser", data: user });
   });
 
   // listen for user leaving room
   socket.on("leave", user => {
     socket.leave(user.room);
-    socket.broadcast.to(user.room).emit("room", { type: "removeUser" });
+    socket.broadcast
+      .to(user.room)
+      .emit("room", { type: "removeUser", data: user });
   });
 
   // listen for drawing message
   socket.on("draw", data => {
     io.to(data.room).emit("draw", data.data);
+  });
+
+  socket.on("clear", data => {
+    io.to(data.room).emit("clear", data);
   });
 });
