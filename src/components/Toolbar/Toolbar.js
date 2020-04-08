@@ -100,15 +100,15 @@ const Toolbar = props => {
 
       {/*ButtonsSection*/}
       <div className="buttons">
-        <button
-          className="Btn"
-          onClick={() => {
-            socket.emit("undo", state);
-            props.setUndo(true);
-          }}
-        >
-          Undo
-        </button>
+        {/* <button */}
+        {/*   className="Btn" */}
+        {/*   onClick={() => { */}
+        {/*     socket.emit("undo", state); */}
+        {/*     props.setUndo(true); */}
+        {/*   }} */}
+        {/* > */}
+        {/*   Undo */}
+        {/* </button> */}
         &nbsp;
         <button
           className="Btn clear"

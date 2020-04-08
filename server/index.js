@@ -92,6 +92,7 @@ io.on("connection", socket => {
   });
 
   socket.on("clear", data => {
+    console.log("hit");
     socket.broadcast.to(data.room).emit("clear", data);
   });
 });
