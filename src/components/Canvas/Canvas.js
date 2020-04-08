@@ -26,27 +26,6 @@ const Canvas = props => {
   const reset = () => {
     if (!drawing) return;
 
-    // const storage = JSON.parse(localStorage.getItem("drawing"));
-    // if (storage) {
-    //   localStorage.setItem(
-    //     "drawing",
-    //     JSON.stringify({
-    //       lines: [...storage.lines, line],
-    //       width: window.innerWidth,
-    //       height: window.innerHeight
-    //     })
-    //   );
-    // } else {
-    //   localStorage.setItem(
-    //     "drawing",
-    //     JSON.stringify({
-    //       lines: [line],
-    //       width: window.innerWidth,
-    //       height: window.innerHeight
-    //     })
-    //   );
-    // }
-
     setPos(null);
     props.saveLine(line);
     setLine([]);

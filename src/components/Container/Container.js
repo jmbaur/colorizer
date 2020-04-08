@@ -16,9 +16,36 @@ const Container = props => {
   const [prevLines, setPrevLines] = React.useState([]);
   const [room, setRoom] = React.useState([]);
 
+  //listen for socket messages
+  socket.on("room", data => {
+    const tmpRoom = room.slice();
+    switch (data.type) {
+      case "addUser":
+        getRoom(data.data.room);
+        break;
+      case "changedUser":
+        let indexC = tmpRoom.findIndex(user => user.id === data.data.id);
+        tmpRoom.splice(indexC, 1, data.data);
+        setRoom(tmpRoom);
+        break;
+      case "removeUser":
+        const indexR = tmpRoom.findIndex(user => user.id === data.data.id);
+        tmpRoom.splice(indexR, 1);
+        setRoom(tmpRoom);
+        break;
+      default:
+        throw new Error();
+    }
+  });
+
+  socket.on("clear", data => {
+    setClear(true);
+  });
+
   // need functions here that help with drawing, clearing, undoing, etc.
   const clearCanvas = bool => {
     setClear(bool);
+    socket.emit("clear", state);
   };
 
   const handleDownload = bool => {
@@ -31,6 +58,16 @@ const Container = props => {
       url: `http://localhost:8000/api/room?room=${reqRoom}`,
       withCredentials: true
     }).then(res => setRoom(res.data));
+  };
+
+  const getPrevLines = room => {
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/line?room=${room}`,
+      withCredentials: true
+    }).then(res => {
+      setPrevLines(res.data);
+    });
   };
 
   const draw = (ctx, x0, y0, x1, y1, color, thickness) => {
@@ -59,16 +96,6 @@ const Container = props => {
     });
   };
 
-  const getPrevLines = room => {
-    axios({
-      method: "get",
-      url: `http://localhost:8000/api/line?room=${room}`,
-      withCredentials: true
-    }).then(res => {
-      setPrevLines(res.data);
-    });
-  };
-
   useMountEffect(() => {
     if (state.room) {
       socket.emit("join", state);
@@ -77,7 +104,6 @@ const Container = props => {
       return;
     }
 
-    let newRoom;
     axios({
       method: "get",
       url: "http://localhost:8000/api/user",
@@ -96,8 +122,6 @@ const Container = props => {
         clearCanvas={clearCanvas}
         handleDownload={handleDownload}
         room={room}
-        setRoom={setRoom}
-        getRoom={getRoom}
       />
       <Canvas
         draw={draw}

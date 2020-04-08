@@ -11,22 +11,6 @@ const Toolbar = props => {
   const socket = React.useContext(socketInst);
   const { state, dispatch } = React.useContext(store);
 
-  socket.on("room", data => {
-    switch (data.type) {
-      case "addUser":
-        props.getRoom(data.data.room);
-        break;
-      case "changedUser":
-        const index = props.room.findIndex(user => user.id === data.data.id);
-        let tmpRoom = props.room.slice();
-        tmpRoom.splice(index, 1, data.data);
-        props.setRoom(tmpRoom);
-        break;
-      default:
-        throw new Error();
-    }
-  });
-
   const [name, bindName] = useInput(state?.name);
   const [changeName, setChangeName] = React.useState(false);
 

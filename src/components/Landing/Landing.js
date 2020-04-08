@@ -2,9 +2,7 @@ import React from "react";
 import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
-import ExistingSession from "../ExistingSession/ExistingSession.js";
 import "./Landing.scss";
-// import color from "../../images/color.svg";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
@@ -12,10 +10,8 @@ const Landing = props => {
   const [name, bindName, resetName] = useInput(state?.name);
   const [room, bindRoom, resetRoom] = useInput("");
   const [selected, setSelected] = React.useState("newRoom");
-  const [existing, setExisting] = React.useState(false);
 
   const handleChange = e => {
-    console.log(e.target.value);
     setSelected(e.target.value);
   };
 
@@ -35,62 +31,44 @@ const Landing = props => {
     props.history.push("/draw");
   };
 
-  // get existing session
-  React.useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:8000/api/user",
-      withCredentials: true
-    }).then(res => {
-      if (!res.data.name) return;
-      setExisting(true);
-      dispatch({ type: "all", payload: res.data });
-    });
-  }, [dispatch]);
-
   return (
     <section className="landingPage">
-      {/* <img id='logocolor' src={color}/> */}
       <form className="loginForm" onSubmit={handleSubmit}>
         <label className="username main">Name</label>
         <input className="name" type="text" autoFocus {...bindName} />
 
-        {!existing ? (
-          <div className="loginInfo">
-            <label className="main">
-              New Room
-              <input
-                type="radio"
-                value="newRoom"
-                onChange={handleChange}
-                checked={selected === "newRoom"}
-              />
-            </label>
+        <div className="loginInfo">
+          <label className="main">
+            New Room
+            <input
+              type="radio"
+              value="newRoom"
+              onChange={handleChange}
+              checked={selected === "newRoom"}
+            />
+          </label>
 
-            <label className="main">
-              Existing Room
-              <input
-                type="radio"
-                value="existingRoom"
-                onChange={handleChange}
-                checked={selected === "existingRoom"}
-              />
-            </label>
+          <label className="main">
+            Existing Room
+            <input
+              type="radio"
+              value="existingRoom"
+              onChange={handleChange}
+              checked={selected === "existingRoom"}
+            />
+          </label>
 
-            {selected === "existingRoom" ? (
-              <div id="roomName">
-                <input
-                  className="name"
-                  type="text"
-                  placeholder="Enter room name"
-                  {...bindRoom}
-                />
-              </div>
-            ) : null}
-          </div>
-        ) : (
-          <ExistingSession user={state} cancel={() => setExisting(false)} />
-        )}
+          {selected === "existingRoom" ? (
+            <div id="roomName">
+              <input
+                className="name"
+                type="text"
+                placeholder="Enter room name"
+                {...bindRoom}
+              />
+            </div>
+          ) : null}
+        </div>
         <button className="Btn" type="submit">
           Start drawing!
         </button>
