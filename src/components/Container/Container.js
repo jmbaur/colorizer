@@ -12,6 +12,7 @@ const Container = props => {
   const { state, dispatch } = React.useContext(store);
 
   const [clear, setClear] = React.useState(false);
+  const [undo, setUndo] = React.useState(false);
   const [download, setDownload] = React.useState(false);
   const [prevLines, setPrevLines] = React.useState([]);
   const [room, setRoom] = React.useState([]);
@@ -39,19 +40,21 @@ const Container = props => {
   });
 
   socket.on("clear", data => {
+    console.log("socket clear hit");
     setClear(true);
   });
 
+  socket.on("undo", data => {
+    window.alert(`${JSON.stringify(data)}`);
+
+    axios({
+      method: "get",
+      url: `http://localhost:8000/api/line?room=${state.room}`,
+      withCredentials: true
+    }).then(res => console.log(res));
+  });
+
   // need functions here that help with drawing, clearing, undoing, etc.
-  const clearCanvas = bool => {
-    setClear(bool);
-    socket.emit("clear", state);
-  };
-
-  const handleDownload = bool => {
-    setDownload(bool);
-  };
-
   const getRoom = reqRoom => {
     axios({
       method: "get",
@@ -119,18 +122,21 @@ const Container = props => {
   return (
     <section className="container">
       <Toolbar
-        clearCanvas={clearCanvas}
-        handleDownload={handleDownload}
+        setUndo={setUndo}
+        setDownload={setDownload}
+        setClear={setClear}
         room={room}
       />
       <Canvas
         draw={draw}
         clear={clear}
-        clearCanvas={clearCanvas}
+        setClear={setClear}
         download={download}
-        handleDownload={handleDownload}
+        setDownload={setDownload}
+        undo={undo}
         saveLine={saveLine}
         prevLines={prevLines}
+        setPrevLines={setPrevLines}
       />
     </section>
   );

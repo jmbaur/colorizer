@@ -100,17 +100,28 @@ const Toolbar = props => {
 
       {/*ButtonsSection*/}
       <div className="buttons">
-        <button className="Btn">Undo</button>
+        <button
+          className="Btn"
+          onClick={() => {
+            socket.emit("undo", state);
+            props.setUndo(true);
+          }}
+        >
+          Undo
+        </button>
         &nbsp;
-        <button className="Btn clear" onClick={() => props.clearCanvas(true)}>
+        <button
+          className="Btn clear"
+          onClick={() => {
+            socket.emit("clear", state);
+            props.setClear(true);
+          }}
+        >
           Clear
         </button>
         <br />
         <div className="download">
-          <button
-            className="Btn left"
-            onClick={() => props.handleDownload(true)}
-          >
+          <button className="Btn left" onClick={() => props.setDownload(true)}>
             Download Art
           </button>
         </div>

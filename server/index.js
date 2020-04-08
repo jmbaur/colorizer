@@ -92,6 +92,6 @@ io.on("connection", socket => {
   });
 
   socket.on("clear", data => {
-    io.to(data.room).emit("clear", data);
+    socket.broadcast.to(data.room).emit("clear", data);
   });
 });

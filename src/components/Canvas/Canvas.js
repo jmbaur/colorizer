@@ -90,10 +90,16 @@ const Canvas = props => {
   // clear the canvas
   React.useEffect(() => {
     if (!props.clear) return;
+    props.setClear(false);
     const { ctx, canvas } = getCanvas();
-    ctx.clearRect(0, 0, canvas.width + 1, canvas.height + 1);
-    // localStorage.clear();
-    props.clearCanvas(false);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    props.setClear(false);
+  }, [props]);
+
+  // undo the last drawn line
+  React.useEffect(() => {
+    if (!props.undo) return;
+    console.log("undo hit");
   }, [props]);
 
   // download the canvas to png
@@ -105,12 +111,16 @@ const Canvas = props => {
     a.href = dataURL;
     a.download = "art.png";
     a.click();
-    props.handleDownload(false);
+    props.setDownload(false);
   }, [props]);
 
   // draw previous lines in room
   React.useEffect(() => {
-    if (!props.prevLines.length) return;
+    if (!props.prevLines.length) {
+      return;
+    }
+    console.log("hit");
+
     const { ctx } = getCanvas();
     for (let i = 0; i < props.prevLines.length; i++) {
       for (let j = 0; j < props.prevLines[i].points.length - 1; j++) {
@@ -132,6 +142,8 @@ const Canvas = props => {
         );
       }
     }
+
+    // props.setPrevLines([]);
   }, [props]);
 
   return (

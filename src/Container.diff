@@ -1,0 +1,57 @@
+--- Container.js	2020-04-08 14:52:38.000000000 -0700
++++ components/Container/Container.js	2020-04-08 12:16:18.000000000 -0700
+@@ -12,6 +12,7 @@
+   const { state, dispatch } = React.useContext(store);
+ 
+   const [clear, setClear] = React.useState(false);
++  const [undo, setUndo] = React.useState(false);
+   const [download, setDownload] = React.useState(false);
+   const [prevLines, setPrevLines] = React.useState([]);
+   const [room, setRoom] = React.useState([]);
+@@ -42,12 +43,27 @@
+     setClear(true);
+   });
+ 
++  socket.on("undo", data => {
++    window.alert(`${JSON.stringify(data)}`);
++
++    axios({
++      method: "get",
++      url: `http://localhost:8000/api/line?room=${state.room}`,
++      withCredentials: true
++    }).then(res => console.log(res));
++  });
++
+   // need functions here that help with drawing, clearing, undoing, etc.
+   const clearCanvas = bool => {
+     setClear(bool);
+     socket.emit("clear", state);
+   };
+ 
++  const handleUndo = bool => {
++    setUndo(bool);
++    socket.emit("undo", state);
++  };
++
+   const handleDownload = bool => {
+     setDownload(bool);
+   };
+@@ -120,6 +136,7 @@
+     <section className="container">
+       <Toolbar
+         clearCanvas={clearCanvas}
++        handleUndo={handleUndo}
+         handleDownload={handleDownload}
+         room={room}
+       />
+@@ -129,8 +146,10 @@
+         clearCanvas={clearCanvas}
+         download={download}
+         handleDownload={handleDownload}
++        undo={undo}
+         saveLine={saveLine}
+         prevLines={prevLines}
++        setPrevLines={setPrevLines}
+       />
+     </section>
+   );
