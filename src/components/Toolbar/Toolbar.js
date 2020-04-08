@@ -36,7 +36,7 @@ const Toolbar = props => {
     }
   });
 
-  const [name, bindName] = useInput(state.name);
+  const [name, bindName] = useInput(state?.name);
   const [changeName, setChangeName] = React.useState(false);
   const [room, setRoom] = React.useState([]);
 
@@ -60,7 +60,7 @@ const Toolbar = props => {
   React.useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:8000/api/room?room=${state.room}`,
+      url: `http://localhost:8000/api/room?room=${state?.room}`,
       withCredentials: true
     }).then(res => setRoom(res.data));
   }, [state]);
@@ -70,7 +70,7 @@ const Toolbar = props => {
       <div className="userInfo">
         <label className="labels">Username:</label>
         {!changeName ? (
-          <p onClick={() => setChangeName(true)}>{state.name}</p>
+          <p onClick={() => setChangeName(true)}>{state?.name}</p>
         ) : (
           <div className="editName">
             <input
@@ -85,7 +85,7 @@ const Toolbar = props => {
         )}
 
         <label className="labels">Room</label>
-        <p>{state.room}</p>
+        <p>{state?.room}</p>
       </div>
       <button
         className="Btn right"
@@ -114,7 +114,7 @@ const Toolbar = props => {
           className="colorPicker"
           type="color"
           name="color"
-          value={state.color}
+          value={state?.color}
           onChange={handleChange}
         />
       </div>
@@ -124,7 +124,7 @@ const Toolbar = props => {
         <input
           className="slider"
           name="thickness"
-          value={state.thickness}
+          value={state?.thickness}
           onChange={handleChange}
           type="range"
           min="1"

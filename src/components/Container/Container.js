@@ -77,11 +77,6 @@ const Container = props => {
     });
   });
 
-  // see if user wants to load previous drawing
-  React.useEffect(() => {
-    if (!prevLines.length) return;
-  }, [prevLines]);
-
   return (
     <section className="container">
       <Toolbar clearCanvas={clearCanvas} handleDownload={handleDownload} />
