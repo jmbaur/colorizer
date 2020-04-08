@@ -38,8 +38,8 @@ const Toolbar = props => {
         {!changeName ? (
           <p onClick={() => setChangeName(true)}>{state?.name}</p>
         ) : (
-          <div data-testid="editnameCheck" >
-            <input 
+          <div>
+            <input data-testid='editName'
               type="text"
               name="name"
               placeholder="Change your name"
@@ -77,6 +77,7 @@ const Toolbar = props => {
       <div className="colorContainer">
         <label className="labels">Pick a Color!</label>
         <input
+          data-testid='colorPicker!'
           className="colorPicker"
           type="color"
           name="color"
@@ -88,6 +89,7 @@ const Toolbar = props => {
       {/*SliderSection*/}
       <div className="sliderContainer">
         <input
+          data-testid='slider!'
           className="slider"
           name="thickness"
           value={state?.thickness}
