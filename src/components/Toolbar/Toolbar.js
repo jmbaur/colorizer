@@ -11,25 +11,16 @@ const Toolbar = props => {
   const socket = React.useContext(socketInst);
   const { state, dispatch } = React.useContext(store);
 
-  const getRoom = () => {
-    axios({
-      method: "get",
-      url: `http://localhost:8000/api/room?room=${state.room}`,
-      withCredentials: true
-    }).then(res => setRoom(res.data));
-  };
-
   socket.on("room", data => {
-    console.log(data.type, typeof data.type);
     switch (data.type) {
       case "addUser":
-        getRoom();
+        props.getRoom(data.data.room);
         break;
       case "changedUser":
-        const index = room.findIndex(user => user.id === data.data.id);
-        let tmpRoom = room.slice();
+        const index = props.room.findIndex(user => user.id === data.data.id);
+        let tmpRoom = props.room.slice();
         tmpRoom.splice(index, 1, data.data);
-        setRoom(tmpRoom);
+        props.setRoom(tmpRoom);
         break;
       default:
         throw new Error();
@@ -38,7 +29,6 @@ const Toolbar = props => {
 
   const [name, bindName] = useInput(state?.name);
   const [changeName, setChangeName] = React.useState(false);
-  const [room, setRoom] = React.useState([]);
 
   const handleChange = e => {
     dispatch({ type: e.target.name, payload: e.target.value });
@@ -56,14 +46,6 @@ const Toolbar = props => {
     socket.emit("change", state);
     setChangeName(false);
   };
-
-  React.useEffect(() => {
-    axios({
-      method: "get",
-      url: `http://localhost:8000/api/room?room=${state?.room}`,
-      withCredentials: true
-    }).then(res => setRoom(res.data));
-  }, [state]);
 
   return (
     <section className="toolbar">
@@ -105,7 +87,7 @@ const Toolbar = props => {
 
       <div className="usersWhoJoin">
         <label className="labels">Online</label>
-        <Room room={room} />
+        <Room room={props.room} />
       </div>
 
       <div className="colorContainer">
