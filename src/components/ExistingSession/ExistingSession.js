@@ -10,9 +10,9 @@ const ExistingSession = props => {
   return (
     <div className='ExistingSession'>
       <h1 id='rejoin'>Rejoin room <span>"</span>{props.user.room}<span>"</span>?</h1>
-      <button className='Btn left' onClick={rejoin}>Yes</button>
+      <button className='Btn green' onClick={rejoin}>Yes</button>
       &nbsp;
-      <button className='Btn right' onClick={props.cancel}>No</button>
+      <button className='Btn red' onClick={props.cancel}>No</button>
     </div>
   );
 };

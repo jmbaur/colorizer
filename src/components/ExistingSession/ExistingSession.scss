@@ -14,16 +14,16 @@
 
 #rejoin > span {
    color: white;
-   font-size: $headings;
+   font-size: $large;
 }
 
 
 //Buttons
-.left{
-   @include left;
+.green{
+   @include greenBtn;
 
 }
 
-.right {
-   @include right;
+.red {
+   @include redBtn;
 }

@@ -1,17 +1,20 @@
-
+@import '../../style/variables//variables.scss';
 .room {
     width: 110px;
     display: flex;
-    // justify-content: space-between;
     align-items: center;
 }
 
 .stroke {
     width: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .userName {
     width:85px;
     text-align: left;
+    background: linear-gradient(rgb(255, 242, 0), rgb(197, 155, 3));
+	background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: $heading;
 }

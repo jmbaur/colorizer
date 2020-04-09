@@ -16,8 +16,6 @@
 	width: 280px;
 	height: 330px;
 	font-size: 1.7rem;
-	// background-image: url('../../images/color.svg');
-	// background-repeat: no-repeat;
 }
 
 .main {
@@ -28,7 +26,7 @@
 .name {
 	@include loginInput;
 	font-family: $secondaryFont;
-	font-size: $headings;
+	font-size: $large;
 }
 
 .loginInfo {
@@ -38,13 +36,7 @@
 	padding: 25px 0 25px 0;
 }
 
-.username,
+// .username,
 #roomName {
 	padding: 10px;
 }
-
-// #logocolor {
-//     text-align: center;
-//     height: 200px;
-//     width: 200px;
-// }

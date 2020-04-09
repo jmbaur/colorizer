@@ -39,9 +39,9 @@ const Toolbar = props => {
         {!changeName ? (
           <p onClick={() => setChangeName(true)}>{state?.name}</p>
         ) : (
-          <div>
+          <div className="editName">
             <input
-              data-testid="editName"
+              data-testid="editName!"
               type="text"
               name="name"
               placeholder="Change your name"
@@ -56,7 +56,7 @@ const Toolbar = props => {
         <p>{state?.room}</p>
       </div>
       <button
-        className="Btn right"
+        className="Btn red"
         onClick={() => {
           socket.emit("leave", state);
           axios({
@@ -86,7 +86,7 @@ const Toolbar = props => {
           value={state?.color}
           onChange={handleChange}
         />
-      </div>
+     
 
       {/*SliderSection*/}
       <div className="sliderContainer">
@@ -100,6 +100,7 @@ const Toolbar = props => {
           min="1"
           max="10"
         />
+      </div>
       </div>
 
       {/*ButtonsSection*/}
@@ -125,7 +126,7 @@ const Toolbar = props => {
         </button>
         <br />
         <div className="download">
-          <button className="Btn left" onClick={() => props.setDownload(true)}>
+          <button className="Btn green" onClick={() => props.setDownload(true)}>
             Download Art
           </button>
         </div>

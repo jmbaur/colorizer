@@ -12,13 +12,13 @@ it("renders starting text for username", () => {
     expect(container.textContent).toContain("Username")
 });
 
-//Checks for editNames does not render
+//Checks editName does not render once component mounts
 it('Checks slider container renders', () => {
     const room = [{id:'1', thickness:'3', color:'blue', name:'hello'}]
     const {queryByTestId} = render(<BrowserRouter><Toolbar room={room}/></BrowserRouter>);
-    const picker = queryByTestId('editName');
+    const editName = queryByTestId('editName!');
 
-    expect(picker).not.toBeTruthy()
+    expect(editName).not.toBeTruthy()
 });
 
 //Checks for colorPicker

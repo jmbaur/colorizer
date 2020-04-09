@@ -27,9 +27,9 @@
         cursor:pointer;
         color:#ffffff;
         font-family: $primaryFont;
-        font-size:.85rem;
+        font-size:.75rem;
         font-weight:bold;
-        padding:2px 15px;
+        padding:2px 5px;
         text-decoration:none;
         text-shadow:0px 1px 0px #3f4d3d;
 
@@ -44,7 +44,7 @@
 }
 
 //RED
-@mixin right {
+@mixin redBtn {
     background:linear-gradient(to bottom, #e51c1c 5%, rgb(185, 51, 10) 100%);
     border:none;
 
@@ -59,7 +59,7 @@
 }
 
 //GREEN
-@mixin left {
+@mixin greenBtn {
     background:linear-gradient(to bottom, #87C231 5%, #12A76B 100%);
     border:none;
 

@@ -15,6 +15,7 @@ const Room = props => {
             backgroundColor: user.color
           }}
         ></div>
+        &nbsp;
         <div className="userName">{user.name}</div>
       </div>
     );
