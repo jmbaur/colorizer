@@ -6,6 +6,9 @@ const session = require("express-session");
 const socket = require("socket.io");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const fs = require("fs");
+const http = require("http");
+const https = require("https");
 
 const {
   setUser,
@@ -49,9 +52,20 @@ app.use(
 );
 
 const PORT = process.env.SERVER_PORT || 8080;
-const server = app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}`)
-);
+const options =
+  process.env.NODE_ENV === "production"
+    ? {
+        key: fs.readFileSync(__dirname + "../../selfsigned.key"),
+        cert: fs.readFileSync(__dirname + "../../selfsigned.crt")
+      }
+    : null;
+
+const server =
+  process.env.NODE_ENV === "production"
+    ? https.createServer(options, app)
+    : http.createServer(app);
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // endpoints
 app.post("/api/user", setUser);
