@@ -5,6 +5,7 @@ import { socketInst } from "../../socket.js";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
 import Room from "../Room/Room.js";
+import config from "../../constants.js";
 import "./Toolbar.scss";
 
 const Toolbar = props => {
@@ -22,7 +23,7 @@ const Toolbar = props => {
   const handleSubmit = e => {
     axios({
       method: "put",
-      url: "http://localhost:8000/api/user",
+      url: `${config.url}/api/user`,
       data: { name },
       withCredentials: true
     });
@@ -39,7 +40,8 @@ const Toolbar = props => {
           <p onClick={() => setChangeName(true)}>{state?.name}</p>
         ) : (
           <div>
-            <input data-testid='editName'
+            <input
+              data-testid="editName"
               type="text"
               name="name"
               placeholder="Change your name"
@@ -59,7 +61,7 @@ const Toolbar = props => {
           socket.emit("leave", state);
           axios({
             method: "delete",
-            url: "http://localhost:8000/api/user",
+            url: `${config.url}/api/user`,
             data: { user: state },
             withCredentials: true
           });
@@ -77,7 +79,7 @@ const Toolbar = props => {
       <div className="colorContainer">
         <label className="labels">Pick a Color!</label>
         <input
-          data-testid='colorPicker!'
+          data-testid="colorPicker!"
           className="colorPicker"
           type="color"
           name="color"
@@ -89,7 +91,7 @@ const Toolbar = props => {
       {/*SliderSection*/}
       <div className="sliderContainer">
         <input
-          data-testid='slider!'
+          data-testid="slider!"
           className="slider"
           name="thickness"
           value={state?.thickness}

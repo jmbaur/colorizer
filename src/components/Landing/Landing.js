@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
+import config from "../../constants.js";
 import "./Landing.scss";
 
 const Landing = props => {
@@ -19,7 +20,7 @@ const Landing = props => {
     e.preventDefault();
     const res = await axios({
       method: "post",
-      url: "http://localhost:8000/api/user",
+      url: `${config.url}/api/user`,
       data: { name, newRoom: selected === "newRoom", room },
       withCredentials: true
     });
