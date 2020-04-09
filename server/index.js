@@ -55,8 +55,8 @@ const PORT = process.env.SERVER_PORT || 8080;
 const options =
   process.env.NODE_ENV === "production"
     ? {
-        key: fs.readFileSync(__dirname + "../../selfsigned.key"),
-        cert: fs.readFileSync(__dirname + "../../selfsigned.crt")
+        key: fs.readFileSync(__dirname + "/../../selfsigned.key"),
+        cert: fs.readFileSync(__dirname + "/../../selfsigned.crt")
       }
     : null;
 
