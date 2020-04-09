@@ -29,7 +29,11 @@ mongoose.connect(
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: `${
+      process.env.NODE_ENV === "production"
+        ? process.env.PROD_URL
+        : "http://localhost:3000"
+    }`,
     preflightContinue: true,
     credentials: true
   })
