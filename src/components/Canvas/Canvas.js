@@ -116,11 +116,7 @@ const Canvas = props => {
 
   // draw previous lines in room
   React.useEffect(() => {
-    if (!props.prevLines.length) {
-      return;
-    }
-    console.log("hit");
-
+    if (!props.prevLines.length) return;
     const { ctx } = getCanvas();
     for (let i = 0; i < props.prevLines.length; i++) {
       for (let j = 0; j < props.prevLines[i].points.length - 1; j++) {
@@ -143,7 +139,7 @@ const Canvas = props => {
       }
     }
 
-    // props.setPrevLines([]);
+    props.setPrevLines([]);
   }, [props]);
 
   return (

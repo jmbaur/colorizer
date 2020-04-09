@@ -30,5 +30,8 @@ module.exports = {
       reducedRoomLines.push(...collection.lines);
     });
     res.status(200).send(reducedRoomLines);
+  },
+  clear: async room => {
+    await Lines.deleteOne({ room });
   }
 };

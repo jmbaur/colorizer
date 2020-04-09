@@ -3,13 +3,14 @@ import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
 import config from "../../constants.js";
+import useMountEffect from "../../hooks/useMountEffect";
 import "./Landing.scss";
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
 
   const [name, bindName, resetName] = useInput(state?.name);
-  const [room, bindRoom, resetRoom] = useInput("");
+  const [room, bindRoom, resetRoom] = useInput(state?.room);
   const [selected, setSelected] = React.useState("newRoom");
 
   const handleChange = e => {
@@ -31,6 +32,22 @@ const Landing = props => {
 
     props.history.push("/draw");
   };
+
+  useMountEffect(() => {
+    axios({
+      method: "get",
+      url: `${config.url}/api/user`,
+      withCredentials: true
+    }).then(res => dispatch({ type: "all", payload: res.data }));
+  });
+
+  // reset name in input
+  React.useEffect(() => {
+    if (!state?.name) return;
+    if (!state?.room) return;
+    resetName();
+    setSelected("existingRoom");
+  }, [state, resetName]);
 
   return (
     <section className="landingPage">

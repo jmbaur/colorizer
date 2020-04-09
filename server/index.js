@@ -14,7 +14,7 @@ const {
   removeUser
 } = require("./controllers/session.js");
 const { getRoom } = require("./controllers/socket.js");
-const { addLine, getLines } = require("./controllers/line.js");
+const { addLine, getLines, clear } = require("./controllers/line.js");
 
 const app = express();
 
@@ -96,7 +96,7 @@ io.on("connection", socket => {
   });
 
   socket.on("clear", data => {
-    console.log("hit");
+    clear(data.room);
     socket.broadcast.to(data.room).emit("clear", data);
   });
 });
