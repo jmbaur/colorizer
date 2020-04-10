@@ -52,22 +52,25 @@ app.use(
 );
 
 const PORT = process.env.SERVER_PORT || 8080;
-const options =
-  process.env.NODE_ENV === "production"
-    ? {
-        key: fs.readFileSync("/etc/letsencrypt/live/colorizer.io/privkey.pem"),
-        cert: fs.readFileSync(
-          "/etc/letsencrypt/live/colorizer.io/fullchain.pem"
-        )
-      }
-    : null;
+// const options =
+//   process.env.NODE_ENV === "production"
+//     ? {
+//         key: fs.readFileSync("/etc/letsencrypt/live/colorizer.io/privkey.pem"),
+//         cert: fs.readFileSync(
+//           "/etc/letsencrypt/live/colorizer.io/fullchain.pem"
+//         )
+//       }
+//     : null;
 
-const server =
-  process.env.NODE_ENV === "production"
-    ? https.createServer(options, app)
-    : http.createServer(app);
+// const server =
+//   process.env.NODE_ENV === "production"
+//     ? https.createServer(options, app)
+//     : http.createServer(app);
+const server = http.createServer(app);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.use(express.static(`${__dirname}/../build`));
 
 // endpoints
 app.post("/api/user", setUser);
