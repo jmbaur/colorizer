@@ -30,23 +30,29 @@ mongoose.connect(
 
 // middlewares
 app.use(express.json());
-app.use(
-  cors({
-    origin: `${
-      process.env.NODE_ENV === "production"
-        ? process.env.PROD_URL
-        : "http://localhost:3000"
-    }`,
-    preflightContinue: true,
-    credentials: true
-  })
-);
+
+const whitelist = [process.env.PROD_URL, process.env.PROD_URL2, "http://localhost", "http://localhost:3000"];
+const corsOptions = {
+  // origin: "http://colorizer.io",
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  preflightContinue: true,
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     sameSite: false,
     saveUninitialized: false,
+    sameSite: 'none',
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
   })
 );
