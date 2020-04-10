@@ -76,8 +76,6 @@ const server = http.createServer(app);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-app.use(express.static(`${__dirname}/../build`));
-
 // endpoints
 app.post("/api/user", setUser);
 app.get("/api/user", getUser);

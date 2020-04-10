@@ -43,9 +43,8 @@ const Landing = props => {
 
   // reset name in input
   React.useEffect(() => {
-    if (!state?.name) return;
-    if (!state?.room) return;
-    resetName();
+    if (!state?.name || !state?.room) return;
+    // resetName();
     setSelected("existingRoom");
   }, [state, resetName]);
 
