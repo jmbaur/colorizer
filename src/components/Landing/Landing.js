@@ -5,6 +5,7 @@ import { store } from "../../store.js";
 import config from "../../constants.js";
 import useMountEffect from "../../hooks/useMountEffect";
 import "./Landing.scss";
+import colorizer from '../../images/colorizer0.png';
 
 const Landing = props => {
   const { state, dispatch } = React.useContext(store);
@@ -51,6 +52,10 @@ const Landing = props => {
 
   return (
     <section className="landingPage">
+      <div>
+      <img src={colorizer}/>
+      </div>
+      
       <form className="loginForm" onSubmit={handleSubmit}>
         <label className="username main">Name</label>
         <input className="name" type="text" autoFocus {...bindName} />

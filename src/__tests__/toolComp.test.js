@@ -21,7 +21,7 @@ it('Checks slider container renders', () => {
     expect(editName).not.toBeTruthy()
 });
 
-//Checks for colorPicker
+//Checks that colorPicker renders
 it('renders color picker!', () => {
     const room = [{id:'1', thickness:'3', color:'blue', name:'hello'}]
     const {queryByTestId} = render(<BrowserRouter><Toolbar room={room}/></BrowserRouter>);
