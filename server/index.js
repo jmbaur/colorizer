@@ -55,8 +55,10 @@ const PORT = process.env.SERVER_PORT || 8080;
 const options =
   process.env.NODE_ENV === "production"
     ? {
-        key: fs.readFileSync(__dirname + "/../../cert.key"),
-        cert: fs.readFileSync(__dirname + "/../../cert.pem")
+        key: fs.readFileSync("/etc/letsencrypt/live/colorizer.io/privkey.pem"),
+        cert: fs.readFileSync(
+          "/etc/letsencrypt/live/colorizer.io/fullchain.pem"
+        )
       }
     : null;
 
