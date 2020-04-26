@@ -31,14 +31,13 @@ mongoose.connect(
 // middlewares
 app.use(express.json());
 
-const whitelist = [process.env.PROD_URL, process.env.PROD_URL2, "http://localhost", "http://localhost:3000"];
+const whitelist = [process.env.REACT_APP_URL, "http://localhost:3000"];
 const corsOptions = {
-  // origin: "http://colorizer.io",
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error("Not allowed by CORS"));
     }
   },
   preflightContinue: true,
@@ -52,26 +51,12 @@ app.use(
     resave: false,
     sameSite: false,
     saveUninitialized: false,
-    sameSite: 'none',
+    sameSite: "none",
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 } // 1 week
   })
 );
 
 const PORT = process.env.SERVER_PORT || 8080;
-// const options =
-//   process.env.NODE_ENV === "production"
-//     ? {
-//         key: fs.readFileSync("/etc/letsencrypt/live/colorizer.io/privkey.pem"),
-//         cert: fs.readFileSync(
-//           "/etc/letsencrypt/live/colorizer.io/fullchain.pem"
-//         )
-//       }
-//     : null;
-
-// const server =
-//   process.env.NODE_ENV === "production"
-//     ? https.createServer(options, app)
-//     : http.createServer(app);
 const server = http.createServer(app);
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
