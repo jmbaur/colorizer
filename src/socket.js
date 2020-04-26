@@ -1,8 +1,10 @@
 import React from "react";
 import io from "socket.io-client";
-import config from "./constants.js";
 
-const socket = io(`${config.url}/`);
+const socket =
+  process.env.NODE_ENV === "production"
+    ? io(`${process.env.REACT_APP_URL}/`)
+    : io("http://localhost:8000/");
 
 const socketInst = React.createContext(socket);
 const { Provider } = socketInst;

@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import useInput from "../../hooks/useInput.js";
 import { store } from "../../store.js";
-import config from "../../constants.js";
 import useMountEffect from "../../hooks/useMountEffect";
 import "./Landing.scss";
 
@@ -21,9 +20,8 @@ const Landing = props => {
     e.preventDefault();
     const res = await axios({
       method: "post",
-      url: `${config.url}/api/user`,
-      data: { name, newRoom: selected === "newRoom", room },
-      withCredentials: true
+      url: `/api/user`,
+      data: { name, newRoom: selected === "newRoom", room }
     });
     dispatch({ type: "all", payload: res.data });
     resetName();
@@ -36,8 +34,7 @@ const Landing = props => {
   useMountEffect(() => {
     axios({
       method: "get",
-      url: `${config.url}/api/user`,
-      withCredentials: true
+      url: `/api/user`
     }).then(res => dispatch({ type: "all", payload: res.data }));
   });
 

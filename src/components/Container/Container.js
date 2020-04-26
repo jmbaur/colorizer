@@ -5,7 +5,6 @@ import { store } from "../../store.js";
 import useMountEffect from "../../hooks/useMountEffect.js";
 import Canvas from "../Canvas/Canvas.js";
 import Toolbar from "../Toolbar/Toolbar.js";
-import config from "../../constants.js";
 import "./Container.scss";
 
 const Container = props => {
@@ -50,8 +49,7 @@ const Container = props => {
 
     axios({
       method: "get",
-      url: `${config.url}/api/line?room=${state.room}`,
-      withCredentials: true
+      url: `/api/line?room=${state.room}`
     }).then(res => console.log(res));
   });
 
@@ -59,16 +57,14 @@ const Container = props => {
   const getRoom = reqRoom => {
     axios({
       method: "get",
-      url: `${config.url}/api/room?room=${reqRoom}`,
-      withCredentials: true
+      url: `/api/room?room=${reqRoom}`
     }).then(res => setRoom(res.data));
   };
 
   const getPrevLines = room => {
     axios({
       method: "get",
-      url: `${config.url}/api/line?room=${room}`,
-      withCredentials: true
+      url: `/api/line?room=${room}`
     }).then(res => {
       setPrevLines(res.data);
     });
@@ -89,14 +85,13 @@ const Container = props => {
   const saveLine = line => {
     axios({
       method: "post",
-      url: `${config.url}/api/line`,
+      url: `/api/line`,
       data: {
         id: state.id,
         name: state.name,
         room: state.room,
         line: { color: state.color, thickness: state.thickness, points: line }
-      },
-      withCredentials: true
+      }
     });
   };
 
@@ -110,8 +105,7 @@ const Container = props => {
 
     axios({
       method: "get",
-      url: `${config.url}/api/user`,
-      withCredentials: true
+      url: `/api/user`
     }).then(res => {
       dispatch({ type: "all", payload: res.data }); // set global state
       socket.emit("join", res.data); // emit to room of a new user

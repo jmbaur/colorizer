@@ -55,4 +55,20 @@ Freezer:
 - test that color (,thickness, etc.) changes when choosing from toolbar
 - test that new user joins the same room as other user
 
-##
+## SystemD Unit File
+
+```
+[Unit]
+Description=Node.js instance for Colorizer web app
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+EnvironmentFile=/home/jared/colorizer/.env
+Type=simple
+ExecStart=/usr/bin/node /home/jared/colorizer/server/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```

@@ -5,7 +5,6 @@ import { socketInst } from "../../socket.js";
 import { store } from "../../store.js";
 import useInput from "../../hooks/useInput.js";
 import Room from "../Room/Room.js";
-import config from "../../constants.js";
 import "./Toolbar.scss";
 
 const Toolbar = props => {
@@ -23,9 +22,8 @@ const Toolbar = props => {
   const handleSubmit = e => {
     axios({
       method: "put",
-      url: `${config.url}/api/user`,
-      data: { name },
-      withCredentials: true
+      url: `/api/user`,
+      data: { name }
     });
     dispatch({ type: "name", payload: e.target.value });
     socket.emit("change", state);
@@ -61,9 +59,8 @@ const Toolbar = props => {
           socket.emit("leave", state);
           axios({
             method: "delete",
-            url: `${config.url}/api/user`,
-            data: { user: state },
-            withCredentials: true
+            url: `/api/user`,
+            data: { user: state }
           });
           props.history.push("/");
         }}
@@ -86,21 +83,20 @@ const Toolbar = props => {
           value={state?.color}
           onChange={handleChange}
         />
-     
 
-      {/*SliderSection*/}
-      <div className="sliderContainer">
-        <input
-          data-testid="slider!"
-          className="slider"
-          name="thickness"
-          value={state?.thickness}
-          onChange={handleChange}
-          type="range"
-          min="1"
-          max="10"
-        />
-      </div>
+        {/*SliderSection*/}
+        <div className="sliderContainer">
+          <input
+            data-testid="slider!"
+            className="slider"
+            name="thickness"
+            value={state?.thickness}
+            onChange={handleChange}
+            type="range"
+            min="1"
+            max="10"
+          />
+        </div>
       </div>
 
       {/*ButtonsSection*/}

@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import config from "./constants.js";
 
 const initialState = {
   id: undefined,
@@ -21,25 +20,22 @@ const StateProvider = ({ children }) => {
       case "color":
         axios({
           method: "put",
-          url: `${config.url}/api/user`,
-          data: { [action.type]: action.payload },
-          withCredentials: true
+          url: `/api/user`,
+          data: { [action.type]: action.payload }
         });
         return { ...state, color: action.payload };
       case "thickness":
         axios({
           method: "put",
-          url: `${config.url}/api/user`,
-          data: { [action.type]: action.payload },
-          withCredentials: true
+          url: `/api/user`,
+          data: { [action.type]: action.payload }
         });
         return { ...state, thickness: action.payload };
       case "room":
         axios({
           method: "put",
-          url: `${config.url}/api/user`,
-          data: { [action.type]: action.payload },
-          withCredentials: true
+          url: `/api/user`,
+          data: { [action.type]: action.payload }
         });
         return { ...state, room: action.payload };
       case "name":
