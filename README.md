@@ -12,6 +12,19 @@ Freezer:
 - user can implement pictures into their canvas
 - implement a database? (not really wanted at the moment)
 
+# Requirements
+
+./.env
+
+```txt
+REACT_APP_URL="<base url for front end in production>"
+SESSION_SECRET="<session store secret>"
+SERVER_PORT="<backend port>"
+CONN_STR="<mongodb connection string>"
+MONGO_INITDB_ROOT_USERNAME="<mongo username>"
+MONGO_INITDB_ROOT_PASSWORD="<mongo password>"
+```
+
 ## Front-End
 
 ### Dependencies
@@ -54,6 +67,18 @@ Freezer:
 - test that user gets placed into room on landing page
 - test that color (,thickness, etc.) changes when choosing from toolbar
 - test that new user joins the same room as other user
+
+## Nginx location block for websocket
+
+```txt
+location /wsapp/ {
+    proxy_pass http://wsbackend;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+    proxy_set_header Host $host;
+}
+```
 
 ## SystemD Unit File
 
