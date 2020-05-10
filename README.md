@@ -14,7 +14,7 @@ Freezer:
 
 # Requirements
 
-./.env
+.env
 
 ```txt
 REACT_APP_URL="<base url for front end in production>"
