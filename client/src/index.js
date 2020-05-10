@@ -7,10 +7,8 @@ import * as serviceWorker from "./serviceWorker";
 
 // set axios defaults
 (function() {
-  axios.defaults.baseURL =
-    process.env.NODE_ENV === "production"
-      ? process.env.REACT_APP_URL
-      : "http://api:8001";
+  if (process.env.NODE_ENV === "production")
+    axios.defaults.baseURL = process.env.REACT_APP_URL;
   axios.defaults.withCredentials = true;
 })();
 

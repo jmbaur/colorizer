@@ -1,9 +1,10 @@
 FROM node:alpine
 
-RUN mkdir -p /app
+RUN mkdir /app
+ADD . /app/
 WORKDIR /app
-COPY package*.json ./
 RUN npm install
-COPY . .
-CMD [ "npx", "nodemon", "index.js" ]
+
+CMD npx nodemon server/index.js;
+
 EXPOSE 8000

@@ -13,7 +13,7 @@ services:
     container_name: "colorizer_api"
     build: ./api
     volumes:
-      - ./api:/app
+      - ./api/server:/app/server
     ports:
       - 8001:8000
     links:
