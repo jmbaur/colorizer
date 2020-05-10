@@ -16,7 +16,7 @@ services:
     volumes:
       - ./api:/app
     ports:
-      - 8001:8000
+      - 4001:8000
     links:
       - mongo
 
